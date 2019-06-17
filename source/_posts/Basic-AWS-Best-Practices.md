@@ -53,4 +53,4 @@ categories: Cloud
 
 ### 6. Loosely Couple Your Architecture
 
-### 7. There Are No Constraints in the AWS Cloud 
+### 7. There Are No Constraints in the AWS Cloud
