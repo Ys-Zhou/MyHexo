@@ -1,8 +1,8 @@
 ---
 title: Key points about AWS WAF
 date: 2019-06-16 11:55:02
-tags: AWS
-categories: Cloud
+tags: SA
+categories: AWS
 ---
 
 # 1. Operational Excellence
