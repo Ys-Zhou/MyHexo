@@ -11,11 +11,9 @@ categories: AWS
   - Kinesis Data Streams
   - SQS
   - IoT
-
 - Near-real time - Reactive actions
   - Kinesis Data Firehose
   - DMS
-
 - Batch - Historical Analysis
   - Snowball
   - Data Pipeline
@@ -55,11 +53,11 @@ categories: AWS
 
 ### Limits
 - Producer
-  - 1MB/s or 1000 messages/s at write per **shard**
+  - 1MB/s or 1000 records/s at write per **shard**
   - *ProvisionedThroughputException* otherwise
 - Consumer Classic
   - 2MB/s at read per **shard** across **all consumers**
-  - 5 API calls per second per **shard** across **all consumers**
+  - 5 API calls/s per **shard** across **all consumers**
 - Consumer Enhanced Fan-Out
   - 2MB/s at read per **shard** per **enhanced consumer**
   - No API calls needed
@@ -70,6 +68,7 @@ categories: AWS
 ## Kinesis Producers
 
 - Kinesis Producer SDK
+- Managed AWS sources
 - Kinesis Producer Library (KPL)
 - Kinesis Agent
 - 3rd party libraries
@@ -79,15 +78,15 @@ categories: AWS
 - PutRecords
   - Use batching and increases throughput
 
-#### Managed AWS sources
-- CloudWatch Logs
-- AWS IoT
-- Kinesis Data Analytics
-
 #### Solutions for *ProvisionedThroughputExceeded* Exceptions
 - Retries with backoff
 - Increase (scale up) shards
 - Use highly distributed partition key
+
+### Managed AWS sources
+- CloudWatch Logs
+- AWS IoT
+- Kinesis Data Analytics
 
 ### Kinesis Producer Library (KPL)
 - C++ / Java library
@@ -110,9 +109,45 @@ categories: AWS
 - Only support Linux-based servers
 - Can write form multiple directories and write to multiple streams
 - Can route based on directory or log file
-- Can pre-process data before sending to streams (single line, json...)
+- Can pre-process data before sending to streams (single line, json, etc.)
 - Handles file rotation, checkpointing and retry
 - Can emit metrics to CloudWatch
 
 ## Kinesis Consumers Classic
 
+- Kinesis Consumer SDK
+- Kinesis Client Library (KCL)
+- Kinesis Connector Library
+- 3rd party libraries (Spark, etc.)
+- Managed AWS sources
+  - Kinesis Firehose
+  - AWS Lambda
+
+### Kinesis Consumer SDK
+- GetRecords
+  - Returns up to 10MB of data (then throttle for 5s) or up to 10,000 records
+  - **Remind**
+    - Maximum of 2MB/s at read per shard
+    - Maximum of 5 GetRecords API calls/s per shard (200ms latency)
+
+### Kinesis Client Library (KCL)
+- Support Java, etc.
+- Read records from Kinesis produced with the KPL (de-aggregation)
+- **Shard discovery**: share multiple shards with multiple consumers in one group
+- **Checkpointing**: resume progress
+- **Leverages DynamoDB for coordination and checkpointing**
+  - Use provisioned DynamoDB with enough WCU and RCU
+  - Use On-Demand DynamoDB
+  - Otherwise DynamoDB may slow down KCL
+
+### Kinesis Connector Library
+- Have been deprecated
+- Can only be running on EC2
+- Write data to S3, DynamoDB, Redshift, ElasticSearch
+- Can be replaced by Kinesis Firehose or Lambda
+
+#### AWS Lambda sourcing from Kinesis
+- Lambda consumer has a library to de-aggregate record from the KPL
+- Lambda can be used to rum lightweight ETL to anywhere you want
+- Lambda can be used to trigger notifications or send emails in real time
+- Lambda has a configurable batch size to regulate throughput
