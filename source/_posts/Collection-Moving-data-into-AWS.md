@@ -151,3 +151,17 @@ categories: AWS
 - Lambda can be used to rum lightweight ETL to anywhere you want
 - Lambda can be used to trigger notifications or send emails in real time
 - Lambda has a configurable batch size to regulate throughput
+
+## Kinesis Enhanced Fan-Out
+
+- Kinesis **pushes** data to consumers over HTTP/2 
+- **Each Consumer** get 2 MB/s of providioned through per shard
+  - No more 2MB/s limit by adding Consumers
+  - Reducy latency (~70ms)
+
+### Enhanced Fan-Out vs Standard Consumers
+|Enhanced Fan-Out|Standard Consumers|
+|---|---|
+|Low number of consuming applications|Multiple Consumer applications for the same Stream|
+|Can tolerate ~200 ms latency|Low latency requirements ~70 ms|
+|Minimize cost|Higher costs (Soft limit of 5 consumers using enhanced fan-out per data stream)|
