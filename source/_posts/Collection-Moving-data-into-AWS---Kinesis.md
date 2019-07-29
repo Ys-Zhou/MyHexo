@@ -1,33 +1,33 @@
 ---
-title: 'Collection: Moving data into AWS'
+title: 'Collection: Moving data into AWS - Kinesis'
 date: 2019-07-14 09:08:57
 tags: BD
 categories: AWS
 ---
 
-## Introduction
+# Introduction
 
 - Real Time - Immediate actions
-  - Kinesis Data Streams
+  - **Kinesis Data Streams**
   - SQS
   - IoT
 - Near-real time - Reactive actions
-  - Kinesis Data Firehose
+  - **Kinesis Data Firehose**
   - DMS
 - Batch - Historical Analysis
   - Snowball
   - Data Pipeline
 
-## Kinesis
+# Kinesis
 
-- Kinesis Data Streams
+- **Kinesis Data Streams**
   - Low latency streaming ingest at scale
 - Kinesis Data Analytics
   - Perform real-time analytics on streams using SQL
-- Kinesis Data Firehose
+- **Kinesis Data Firehose**
   - Load streams into S3, redshift, ElasticSearch and Splunk
 
-## Kinesis Streams
+# Kinesis Data Streams
 
 - Streams are divided in ordered Shards
 - Ability to reprocess / replay data
@@ -165,3 +165,35 @@ categories: AWS
 |Low number of consuming applications|Multiple Consumer applications for the same Stream|
 |Can tolerate ~200 ms latency|Low latency requirements ~70 ms|
 |Minimize cost|Higher costs (Soft limit of 5 consumers using enhanced fan-out per data stream)|
+
+## Kinesis Scaling
+
+### Shard Splitting
+- Can be used to increase the Stream capacity (1MB/s per shard)
+- Can be used to divided a *hot shard*
+- The old shard is closed and deleted based on data expiration
+
+### Shard Merging
+- Decrease the Stream capacity and save costs
+- Group two shards with low traffic
+- Old shards are closed and deleted based on data expiration
+
+### No Native Auto Scaling
+- Can implement Auto Scaling with AWS Lambda
+- The API call to change the number of shards is *UpdateShardCount*
+
+### Scaling Limitations
+- Resharding cannot be done in parallel (have to plan capacity in advance)
+- Can only perform one resharding at a time and it takes a few seconds
+  - Double 1000 shards takes about 8.3 hours
+
+## Kinesis Security
+
+- Control access / autorization using IAM policies
+- Encryption in transit using HTTPS endpoints
+- Encryption at rest using KMS
+- Client side encryption can only be implemented manually
+- VPC Endpoints is available for Kinesis
+
+# Kinesis Data Firehose
+
