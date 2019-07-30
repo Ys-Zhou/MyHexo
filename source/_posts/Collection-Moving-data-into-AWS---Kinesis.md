@@ -11,7 +11,7 @@ categories: AWS
   - **Kinesis Data Streams**
   - SQS
   - IoT
-- Near-real time - Reactive actions
+- Near Real Time - Reactive actions
   - **Kinesis Data Firehose**
   - DMS
 - Batch - Historical Analysis
@@ -197,3 +197,47 @@ categories: AWS
 
 # Kinesis Data Firehose
 
+- Near Real Time (60s latency minimum for non-full batches)
+- Read data from
+  - SDK or KPL
+  - Kinesis Agent
+  - Kinesis Data Streams
+  - CloudWatch Logs & Events
+  - IoT rules actions
+- Load data into
+  - **S3**
+  - **Redshift**
+  - **ElasticSearch**
+  - **Splunk**
+- Spark or KCL **cannot** read from Firehose
+- Auto scaling
+- Support Data Conversions
+  - JSON to Parquet
+  - JSON to ORC (only for S3)
+- Support Data Transformation through AWS Lambda
+- Support Support compression (only for S3)
+  - GZIP, ZIP, Snappy
+  - Only GZIP when data is further loaded into Redshift
+- Only pay for the amount of data going through Firehose
+
+### Delivery Features
+- Source Records
+- Transformation Failures
+- Delivery Failures
+can be stored directly into S3
+
+### Buffer Sizing
+- When buffer is reached, it's flushed
+  - Buffer Size
+  - Buffer Time
+- Automatically increase the buffer size to increase throughput
+- High through: more buffer size
+- Low through: less buffer time
+
+## Kinesis Data Streams vs Firehose
+|Streams|Firehose|
+|---|---|
+|Custom consumer code|Fully managed, only send to S3, Redshift, ElasticSearch, Splunk|
+|Real time (~200ms for classic or ~70ms for enhanced fan-out)|Near real time (1min~ buffer time)|
+|Manual Scaling (shard splitting / merging)|Auto Scaling|
+|Data Storage for 1 to 7 days|No data storage|
