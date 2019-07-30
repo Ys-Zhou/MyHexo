@@ -5,6 +5,37 @@ tags: BD
 categories: AWS
 ---
 
+- [Introduction](#Introduction)
+- [Kinesis](#Kinesis)
+- [Kinesis Data Streams](#Kinesis-Data-Streams)
+  - [Key Concepts](#Key-Concepts)
+    - [Shards](#Shards)
+    - [Records](#Records)
+    - [Limits](#Limits)
+  - [Kinesis Producers](#Kinesis-Producers)
+    - [Kinesis Producer SDK](#Kinesis-Producer-SDK)
+      - [Solutions for *ProvisionedThroughputExceeded* Exceptions](#Solutions-for-ProvisionedThroughputExceeded-Exceptions)
+    - [Managed AWS Sources](#Managed-AWS-Sources)
+    - [Kinesis Producer Library (KPL)](#Kinesis-Producer-Library-KPL)
+    - [Kinesis Agent](#Kinesis-Agent)
+  - [Kinesis Consumers Classic](#Kinesis-Consumers-Classic)
+    - [Kinesis Consumer SDK](#Kinesis-Consumer-SDK)
+    - [Kinesis Client Library (KCL)](#Kinesis-Client-Library-KCL)
+    - [Kinesis Connector Library](#Kinesis-Connector-Library)
+    - [AWS Lambda Sourcing from Kinesis](#AWS-Lambda-Sourcing-from-Kinesis)
+  - [Kinesis Enhanced Fan-Out](#Kinesis-Enhanced-Fan-Out)
+    - [Enhanced Fan-Out vs Standard Consumers](#Enhanced-Fan-Out-vs-Standard-Consumers)
+  -[Kinesis Scaling](#Kinesis-Scaling)
+    - [Shard Splitting](#Shard-Splitting)
+    - [Shard Merging](#Shard-Merging)
+    - [No Native Auto Scaling](#No-Native-Auto-Scaling)
+    - [Limitations](#Limitations)
+  - [Kinesis Security](#Kinesis-Security)
+- [Kinesis Data Firehose](#Kinesis-Data-Firehose)
+  - [Delivery Features](#Delivery-Features)
+  - [Buffer Sizing](#Buffer-Sizing)
+  - [Kinesis Data Streams vs Firehose](#Kinesis-Data-Streams-vs-Firehose)
+
 # Introduction
 
 - Real Time - Immediate actions
@@ -34,6 +65,8 @@ categories: AWS
   - Multiple applications can consume the same stream
 - Real-time processing with scale of throughput
 - Once data is inserted in Kinesis, it can't be deleted (data in Kinesis is immutability)
+
+## Key Concepts
 
 ### Shards
 - The number of shards can evolve over time (reshard / merge)
@@ -73,7 +106,7 @@ categories: AWS
 - Kinesis Agent
 - 3rd party libraries
 
-### SDK
+### Kinesis Producer SDK
 - PutRecord
 - PutRecords
   - Use batching and increases throughput
@@ -83,7 +116,7 @@ categories: AWS
 - Increase (scale up) shards
 - Use highly distributed partition key
 
-### Managed AWS sources
+### Managed AWS Sources
 - CloudWatch Logs
 - AWS IoT
 - Kinesis Data Analytics
@@ -126,9 +159,8 @@ categories: AWS
 ### Kinesis Consumer SDK
 - GetRecords
   - Returns up to 10MB of data (then throttle for 5s) or up to 10,000 records
-  - **Remind**
-    - Maximum of 2MB/s at read per shard
-    - Maximum of 5 GetRecords API calls/s per shard (200ms latency)
+    - **Maximum of 2MB/s at read per shard**
+    - **Maximum of 5 GetRecords API calls/s per shard (200ms latency)**
 
 ### Kinesis Client Library (KCL)
 - Support Java, etc.
@@ -146,7 +178,7 @@ categories: AWS
 - Write data to S3, DynamoDB, Redshift, ElasticSearch
 - Can be replaced by Kinesis Firehose or Lambda
 
-#### AWS Lambda sourcing from Kinesis
+### AWS Lambda Sourcing from Kinesis
 - Lambda consumer has a library to de-aggregate record from the KPL
 - Lambda can be used to rum lightweight ETL to anywhere you want
 - Lambda can be used to trigger notifications or send emails in real time
@@ -182,7 +214,7 @@ categories: AWS
 - Can implement Auto Scaling with AWS Lambda
 - The API call to change the number of shards is *UpdateShardCount*
 
-### Scaling Limitations
+### Limitations
 - Resharding cannot be done in parallel (have to plan capacity in advance)
 - Can only perform one resharding at a time and it takes a few seconds
   - Double 1000 shards takes about 8.3 hours
@@ -220,13 +252,14 @@ categories: AWS
   - Only GZIP when data is further loaded into Redshift
 - Only pay for the amount of data going through Firehose
 
-### Delivery Features
+## Delivery Features
 - Source Records
 - Transformation Failures
 - Delivery Failures
+
 can be stored directly into S3
 
-### Buffer Sizing
+## Buffer Sizing
 - When buffer is reached, it's flushed
   - Buffer Size
   - Buffer Time
