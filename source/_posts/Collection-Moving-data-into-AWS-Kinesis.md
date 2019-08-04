@@ -1,7 +1,7 @@
 ---
 title: 'Collection: Moving data into AWS - Kinesis'
 date: 2019-07-14 09:08:57
-tags: BD
+tags: Big Data
 categories: AWS
 ---
 
