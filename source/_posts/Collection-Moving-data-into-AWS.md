@@ -1,5 +1,5 @@
 ---
-title: 'Collection: Moving data into AWS - Kinesis'
+title: 'Collection: Moving data into AWS'
 date: 2019-07-14 09:08:57
 tags: Big Data
 categories: AWS
@@ -35,15 +35,37 @@ categories: AWS
   - [Delivery Features](#Delivery-Features)
   - [Buffer Sizing](#Buffer-Sizing)
   - [Kinesis Data Streams vs Firehose](#Kinesis-Data-Streams-vs-Firehose)
+- [AWS SQS](#AWS-SQS)
+  - [SQS - Standard Queue](#SQS-Standard-Queue)
+  - [SQS - FIFO Queue](#SQS-FIFO-Queue)
+  - [Producing Messages](#Producing-Messages)
+  - [Consuming Messages](#Consuming-Messages)
+  - [SQS Extended Client](#SQS-Extended-Client)
+  - [Use Cases](#Use-Cases)
+  - [Pricing](#Pricing)
+  - [Security](#Security)
+- [AWS IoT](#AWS-IoT)
+  - [Device Gateway](#Device-Gateway)
+  - [Message Broker](#Message-Broker)
+    - [Rules Engine](#Rules-Engine)
+  - [Thing Registry](#Thing-Registry)
+    - [Authentication](#Authentication)
+    - [Authentication Policies](#Authentication-Policies)
+  - [Device Shadow](#Device-Shadow)
+  - [Greengrass](#Greengrass)
+-[Database Migration Service (DMS)](#Database-Migration-Service-DMS)
+  -[Sources and Targets](#Sources-and-Targets)
+  -[Schema Conversion Tool (SCT)](#Schema-Conversion-Tool-SCT)
+  -[Different between DMS and SCT](#Different-between-DMS-and-SCT)
 
 # Introduction
 
 - Real Time - Immediate actions
-  - **Kinesis Data Streams**
+  - Kinesis Data Streams
   - SQS
   - IoT
 - Near Real Time - Reactive actions
-  - **Kinesis Data Firehose**
+  - Kinesis Data Firehose
   - DMS
 - Batch - Historical Analysis
   - Snowball
@@ -67,7 +89,6 @@ categories: AWS
 - Once data is inserted in Kinesis, it can't be deleted (data in Kinesis is immutability)
 
 ## Key Concepts
-
 ### Shards
 - The number of shards can evolve over time (reshard / merge)
 - Records are only ordered per shard
@@ -99,7 +120,6 @@ categories: AWS
   - Up to 7 days
 
 ## Kinesis Producers
-
 - Kinesis Producer SDK
 - Managed AWS sources
 - Kinesis Producer Library (KPL)
@@ -147,7 +167,6 @@ categories: AWS
 - Can emit metrics to CloudWatch
 
 ## Kinesis Consumers Classic
-
 - Kinesis Consumer SDK
 - Kinesis Client Library (KCL)
 - Kinesis Connector Library
@@ -185,21 +204,19 @@ categories: AWS
 - Lambda has a configurable batch size to regulate throughput
 
 ## Kinesis Enhanced Fan-Out
-
 - Kinesis **pushes** data to consumers over HTTP/2 
 - **Each Consumer** get 2 MB/s of providioned through per shard
   - No more 2MB/s limit by adding Consumers
   - Reducy latency (~70ms)
 
 ### Enhanced Fan-Out vs Standard Consumers
-|Enhanced Fan-Out|Standard Consumers|
-|---|---|
-|Low number of consuming applications|Multiple Consumer applications for the same Stream|
-|Can tolerate ~200 ms latency|Low latency requirements ~70 ms|
-|Minimize cost|Higher costs (Soft limit of 5 consumers using enhanced fan-out per data stream)|
+Enhanced Fan-Out|Standard Consumers
+---|---
+Low number of consuming applications|Multiple Consumer applications for the same Stream
+Can tolerate ~200 ms latency|Low latency requirements ~70 ms
+Minimize cost|Higher costs (Soft limit of 5 consumers using enhanced fan-out per data stream)
 
 ## Kinesis Scaling
-
 ### Shard Splitting
 - Can be used to increase the Stream capacity (1MB/s per shard)
 - Can be used to divided a *hot shard*
@@ -220,7 +237,6 @@ categories: AWS
   - Double 1000 shards takes about 8.3 hours
 
 ## Kinesis Security
-
 - Control access / autorization using IAM policies
 - Encryption in transit using HTTPS endpoints
 - Encryption at rest using KMS
@@ -268,9 +284,147 @@ can be stored directly into S3
 - Low through: less buffer time
 
 ## Kinesis Data Streams vs Firehose
-|Streams|Firehose|
-|---|---|
-|Custom consumer code|Fully managed, only send to S3, Redshift, ElasticSearch, Splunk|
-|Real time (~200ms for classic or ~70ms for enhanced fan-out)|Near real time (1min~ buffer time)|
-|Manual Scaling (shard splitting / merging)|Auto Scaling|
-|Data Storage for 1 to 7 days|No data storage|
+Streams|Firehose
+---|---
+Custom consumer code|Fully managed, only send to S3, Redshift, ElasticSearch, Splunk
+Real time (~200ms for classic or ~70ms for enhanced fan-out)|Near real time (1min~ buffer time)
+Manual Scaling (shard splitting / merging)|Auto Scaling
+Data Storage for 1 to 7 days|No data storage
+
+# AWS SQS
+
+## SQS - Standard Queue
+- Auto Scales without limit
+- Retention of messages from 1 minute to 14 days, 4 days by default
+- the number of messages in the queue has no limit
+- Low latency (~10 ms on publish and receive)
+- Consumers can be scaled horizontally
+- **Can have duplicate messages**
+- **Can have out of order messages**
+- **Limitation of 256KB per message**
+
+## SQS - FIFO Queue
+- Name of the queue ends in .fifo
+- Up to 3,000 messages/s with batching or 300 messages/s without (soft limit)
+- **Messages are sent only once**
+- **Messages are processed in order**
+
+## Producing Messages
+- Message body
+  - String
+  - Up to 256KB
+- Message attributes (metadata)
+  - Key-value pair
+- Delivery delay
+- Return
+  - Message ID
+  - MD% hash of the body
+
+## Consuming Messages
+- Poll messages from SQS 
+  - Up to 10 messages at a time
+- Process the message within the visibility timeout
+- Delete the message by message ID & receipt handle
+- Maximum of 120,000 messages being processed by consumers
+
+## SQS Extended Client
+- Send messages larger than 256KB
+- Not recommended
+- Java Library
+  - Send message to S3 first
+  - Only send metadata to SQS
+
+## Use Cases
+- Decouple applications asynchronously
+- Buffer writes
+- Handle large loads of messages
+
+## Pricing
+- Pay per API request
+- Pay network usage
+
+## Security
+- HTTPS endpoints
+- Server Side Encryption using KMS
+  - Only encrypts the body
+- IAM
+- SQS queue access policy
+
+# AWS IoT
+
+## Device Gateway
+- The entry point for IoT devices connecting to AWS IoT
+- Supports the MQTT, WebSockets, and HTTP 1.1 protocols
+
+## Message Broker
+- For devices to communicate with others
+- Pub/sub messaging pattern with low latency
+- Supports the MQTT, WebSockets, and HTTP 1.1 protocols
+
+### Rules Engine
+- Rules are defined on the Broker topics
+- Rule-action pairs
+- Used to augment or filter data received from devices
+- Rules need IAM Roles to perform the actions
+
+## Thing Registry
+- Represent all connected devices
+  - A unique ID
+  - Metadata
+  - X.509 certificate
+  - IoT Groups
+- Can organizes the resources associated with each device
+
+### Authentication
+- Things
+  - X.509 certificates
+  - AWS SigV4
+  - Custom tokens with custom authorizers
+- Mobile apps
+  - Cognito
+- Web/Desktop/CLI
+  - IAM
+  - Federated Identities
+
+### Authentication Policies
+- IoT policies
+  - Attached to X.509 certificates or Cognito Identities
+  - Can be attached to Groups in stead of Things
+- IAM policies
+  - Used for controlling IoT AWS APIs
+
+## Device Shadow
+- Record the state of Things and synchronize the state when Things back up online
+- JSON document
+
+## Greengrass
+- Brings the compute layer to the devices locally
+- Execute AWS Lambda on the devices and operate offline
+- Deploy functions from the cloud
+
+# Database Migration Service (DMS)
+
+- Migrate databases to AWS
+- The source database remains available during the migration
+- Must run an EC2 instance to perform Continuous Data Replication task using Change Data Capture (CDC)
+
+## Sources and Targets
+- Sources
+  - On-Premise or EC2 instances databases
+  - RDS
+  - S3
+- Targets
+  - On-Premise or EC2 instances databases
+  - RDS, Redshift, DynamoDB
+  - S3
+  - ElasticSearch, Kinesis Data Streams, DocumentDB
+
+## Schema Conversion Tool (SCT)
+- A tool to convert database schema from one to another
+- Can use SCT to create DMS endpoints and tasks
+
+## Different between DMS and SCT
+DMS|SCT
+---|---
+Migrate smaller relational workloads (<10 TB) and MongoDB|Migrate large data warehouse workloads
+Support ongoing replication to keep the target in sync|Do not support
