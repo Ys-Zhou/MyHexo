@@ -53,10 +53,10 @@ categories: AWS
     - [Authentication Policies](#Authentication-Policies)
   - [Device Shadow](#Device-Shadow)
   - [Greengrass](#Greengrass)
--[Database Migration Service (DMS)](#Database-Migration-Service-DMS)
-  -[Sources and Targets](#Sources-and-Targets)
-  -[Schema Conversion Tool (SCT)](#Schema-Conversion-Tool-SCT)
-  -[Different between DMS and SCT](#Different-between-DMS-and-SCT)
+- [Database Migration Service (DMS)](#Database-Migration-Service-DMS)
+  - [Sources and Targets](#Sources-and-Targets)
+  - [Schema Conversion Tool (SCT)](#Schema-Conversion-Tool-SCT)
+  - [Different between DMS and SCT](#Different-between-DMS-and-SCT)
 
 # Introduction
 
@@ -73,11 +73,11 @@ categories: AWS
 
 # Kinesis
 
-- **Kinesis Data Streams**
+- Kinesis Data Streams
   - Low latency streaming ingest at scale
 - Kinesis Data Analytics
   - Perform real-time analytics on streams using SQL
-- **Kinesis Data Firehose**
+- Kinesis Data Firehose
   - Load streams into S3, redshift, ElasticSearch and Splunk
 
 # Kinesis Data Streams
