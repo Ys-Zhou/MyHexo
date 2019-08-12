@@ -5,7 +5,6 @@ tags: Big Data
 categories: AWS
 ---
 
-- [Introduction](#Introduction)
 - [Kinesis](#Kinesis)
 - [Kinesis Data Streams](#Kinesis-Data-Streams)
   - [Key Concepts](#Key-Concepts)
@@ -57,19 +56,10 @@ categories: AWS
   - [Sources and Targets](#Sources-and-Targets)
   - [Schema Conversion Tool (SCT)](#Schema-Conversion-Tool-SCT)
   - [Different between DMS and SCT](#Different-between-DMS-and-SCT)
-
-# Introduction
-
-- Real Time - Immediate actions
-  - Kinesis Data Streams
-  - SQS
-  - IoT
-- Near Real Time - Reactive actions
-  - Kinesis Data Firehose
-  - DMS
-- Batch - Historical Analysis
-  - Snowball
-  - Data Pipeline
+- [Direct Connect](#Direct-Connect)
+- [Snowball](#Snowball)
+  - [Snowball Edge](#Snowball-Edge)
+  - [Snowmobile](#Snowmobile)
 
 # Kinesis
 
@@ -428,3 +418,35 @@ DMS|SCT
 ---|---
 Migrate smaller relational workloads (<10 TB) and MongoDB|Migrate large data warehouse workloads
 Support ongoing replication to keep the target in sync|Do not support
+
+# Direct Connect
+
+- Provides a dedicated private connection from a remote network to your public resources or VPCs
+  - Need a Virtual Private Gateway on your VPC
+- Can setup multiple 1 Gbps or 10 Gbps connections
+- Connect to Direct Connect endpoint in Direct Connect location
+- Use Cases
+  - Increase bandwidth throughput
+  - Real-time data feeds
+  - Hybrid Environment
+  - Enhanced security using private connection
+- Use two Direct Connect as a failover
+- Use Direct Connect Gateway if you want to connect to VPCs in different regions
+
+# Snowball
+
+- Physical device to move TBs to PBs of data in or out of AWS
+- Secure by using KMS 256 bit encryption
+- Use Snowball if it takes more than a week to transfer over the network
+
+## Snowball Edge
+- More capacity (100 TB) with computational capability
+  - Storage optimized
+  - Compute optimized
+- Can pre-process the data while moving
+  - Support EC2 AMI
+  - Support Lambda functions
+
+## Snowmobile
+- 100 PB of capacity
+- Batter than Snowball if more than 10 PB
