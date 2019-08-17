@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hiko Amane's blog
-subtitle:
-description: 
-keywords: Progamming, Architecting
+title: Hiko Amane's Blog
+subtitle: Notes to myself
+#description:
+#keywords:
 author: Yan Zhou
 language: en
 timezone: Asia/Tokyo
@@ -29,10 +29,11 @@ i18n_dir: :lang
 skip_render:
 
 # Writing
-new_post_name: :title.md # File name of new posts
+new_post_name: :title.md
 default_layout: post
-titlecase: false # Transform title into titlecase
-external_link: true # Open external links in new tab
+auto_spacing: false
+titlecase: false
+external_link: true
 filename_case: 0
 render_drafts: false
 post_asset_folder: false
@@ -41,18 +42,9 @@ future: true
 highlight:
   enable: true
   line_number: true
-  auto_detect: false
+  auto_detect: true
   tab_replace:
-  
-# Home page setting
-# path: Root path for your blogs index page. (default = '')
-# per_page: Posts displayed per page. (0 = disable pagination)
-# order_by: Posts order. (Order by date descending by default)
-index_generator:
-  path: ''
-  per_page: 10
-  order_by: -date
-  
+
 # Category & Tag
 default_category: uncategorized
 category_map:
@@ -73,7 +65,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: chan
+theme: aircloud
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -81,3 +73,33 @@ deploy:
   type: git
   repo: git@github.com:Ys-Zhou/Ys-Zhou.github.io.git
   branch: master
+
+# Custom
+
+# Site
+SEOTitle: Hiko Amane's Blog
+email: zhouyan1993ys@gmail.com
+#description:
+#keyword:
+
+# SNS
+#weibo_username:
+#zhihu_username:
+github_username: Ys-Zhou
+#twitter_username:
+#facebook_username:
+linkedin_username: yan-zhou-65358117b
+
+# Build
+anchorjs: true
+sidebar-avatar: img/avatar.jpg
+
+# Friends
+#friends:
+
+search:
+  path: search.json
+  field: post
+
+post_style:
+  indent: 0
