@@ -1,8 +1,8 @@
 ---
 title: Basic AWS Best Practices
 date: 2019-06-16 17:19:42
-tags: SA
-categories: AWS
+tags: AWS - Solutions Architect
+categories:
 ---
 
 ## Three ways to deploy applications to the cloud

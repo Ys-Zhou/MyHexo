@@ -1,8 +1,8 @@
 ---
 title: 'Storage'
 date: 2019-08-17 10:48:03
-tags: Big Data
-categories: AWS
+tags: AWS - Big Data
+categories:
 ---
 
 # S3
@@ -85,3 +85,16 @@ categories: AWS
 
 # DynamoDB
 
+- Distributed NoSQL database
+- DynamoDB
+  - tables
+    - primary key (Unique and diverse)
+      - Partition key only
+      - Partition kay and sort key
+    - items (Max size is 400 KB)
+      - attributes
+        - String, Number, Binary, Boolean, NUll
+        - String Set, Number Set, Binary Set
+        - List, Map
+
+## Provisioned Throughput

@@ -1,8 +1,8 @@
 ---
 title: 'Collection'
 date: 2019-07-14 09:08:57
-tags: Big Data
-categories: AWS
+tags: AWS - Big Data
+categories:
 ---
 
 # Kinesis
