@@ -360,7 +360,7 @@ can be stored directly into S3
 ## Different between DMS and SCT
 |DMS|SCT|
 |---|---|
-|Migrate smaller relational workloads (<10 TB) and MongoDB|Migrate large data warehouse workloads|
+|Migrate smaller relational workloads (&lt; 10 TB) and MongoDB|Migrate large data warehouse workloads|
 |Support ongoing replication to keep the target in sync|Do not support|
 
 # Direct Connect
