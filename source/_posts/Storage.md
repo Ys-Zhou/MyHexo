@@ -98,3 +98,38 @@ categories:
         - List, Map
 
 ## Provisioned Throughput
+- Read and write capacity units must be provisioned
+  - Option to setup auto-scaling of throughput
+- Throughput can be exceeded temporarily using *burst credit*
+- If capacity is exceeded, you will get *ProvisionedThroughputExceededExceptions*
+  - It is advised to do an exponential back-off retry
+
+### Write Capacity Units (WCU)
+- 1 WCU = 1 write per second for an item up to 1 KB
+- **WCU = (number of objects per second) * ceil(max size of object / 1 KB)**
+
+### Strongly Consistent Read vs. Eventually Consistent Read
+- DynamoDB is distributed
+  - Uses Eventually Consistent Read by default
+- Strongly Consistent Read
+  - Will get correct data if read just after write
+- Eventually Consistent Read
+  - Maybe get outdated data if read just after write because of replication
+
+### Read Capacity Units (RCU)
+- 1 RCU = 1 strongly consistent read or 2 eventually consistent reads per second for an item up to 4 KB
+- Strongly Consistent Read
+  - **RCU = (number of objects per second) * ceil(max size of object / 4 KB)**
+- Eventually Consistent Read
+  - **RCU = (number of objects per second / 2) * ceil(max size of object / 4 KB)**
+
+### *ProvisionedThroughputExceededExceptions*
+- Occurred when RCU or WCU is exceeded
+- Reasons
+  - Hot keys or partitions
+  - Too large items
+- Solutions
+  - Use exponential back-off in SDK
+  - Distribute partition keys
+  - If it is RCU issue, you can use DynamoDB Accelerator (DAX)
+
