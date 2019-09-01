@@ -133,3 +133,62 @@ categories:
   - Distribute partition keys
   - If it is RCU issue, you can use DynamoDB Accelerator (DAX)
 
+## Partition
+- Each partition
+  - Max of 3000 RCU and 1000 WCU
+  - Max of 10 GB
+- The number of partition
+  - Capacity partitions = ceil((RCU / 3000) + (WCU / 1000))
+  - Size partitions = ceil(Size / 10 GB)
+  - Partitions = max(Capacity partitions, Size partitions)
+- WCU and RCU are spread evenly between partition
+
+## APIs
+- *PutItem*
+  - Creat data or full replace
+- *UpdateItem*
+  - partial update
+- *ConditionalWrites*
+  - Put / update only if conditions are respected
+  - No performance impact
+- *DeleteItem*
+  - Delete an individual row
+  - Can perform a conditional delete
+- *DeleteTable*
+  - Delete a whole table
+- *BatchWriteItem*
+  - Up to 25 *PutItem* and / or *DeleteItem* in one call
+  - Up to 16 MB and up to 400 KB per item
+  - Lower latency by reducing API calls
+  - Batching is done in parallel
+  - Batching also supports exponential back-off retry
+- *GetItem*
+  - Read based on Primary key
+    - Partition key
+    - Partition key + sort key
+  - Eventually consistent read by default (option to use strong consistent read)
+  - Can only **filter** data by Projection Expression
+- *BatchGetItem*
+  - Up to 100 items
+  - Up to 16 MB
+  - Batching is done in parallel
+
+### Query
+- Based on
+  - Partition key = &lt;condition&gt; (demand)
+  - Sort key [=, &lt;, &lt;=, &gt;, &gt;=, Between, Begin] &lt;condition&gt; (optional)
+  - Limit &lt;number of items&gt;
+  - Client side filtering by Filter Expression
+- Returns
+  - Up to 1 MB of data or use pagination
+
+### Scan
+- Scan entire table
+- Returns up to 1 MB of data or use pagination
+- Can reduce consumption of RCU by
+  - using limit
+  - pausing
+- Filter data use Projection Expression or Filter Expression
+- **parallel scans**
+  - Can scan multiple partitions at the same time
+  - Increases throughput but also RCU consumed
