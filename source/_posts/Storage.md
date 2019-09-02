@@ -192,3 +192,36 @@ categories:
 - **parallel scans**
   - Can scan multiple partitions at the same time
   - Increases throughput but also RCU consumed
+
+## Indexes
+- Another partition key + optional sort key
+
+### Local Secondary Index (LSI)
+- Up to five LSI per table
+- LSI must be defined at creation time
+
+### Global Secondary Index (GSL)
+- Create a new 'view' by projecting attributes
+  - Index only (KEYS_ONLY)
+  - Specify extra attributes (INCLUDE)
+  - All attributes (ALL)
+- Need define independent RCU / WCU
+- Can add or modify GSI at any time
+
+## DAX (DynamoDB Accelerator)
+- Cache for DynamoDB
+- Writs also go through DAX
+- 5 minutes TTL by default
+- Up to 10 nodes in one cluster
+- Multi-AZ
+
+## Streams
+- Trigger other services when changes in DynamoDB
+  - AWS Lambda
+  - Kinesis Adapter
+- Has 24 hours of data retention
+- Can use batch (up to 1000 rows or 6 MB)
+
+### Kinesis Adapter
+- In KCL library
+- Directly consume from DynamoDB Streams
