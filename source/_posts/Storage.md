@@ -225,3 +225,28 @@ categories:
 ### Kinesis Adapter
 - In KCL library
 - Directly consume from DynamoDB Streams
+
+## TTL (Time to Live)
+- Automatically delete an item after an expiry datetime
+- TTL is defined in a column (by setting expiry datetime)
+- Expired item will be deleted within 48 hours
+- GSI / LSI will also be deleted
+- You can recover items using DynamoDB Streams
+
+## Other Features
+- Point in time restore
+- Global Tables (Multi region)
+- Support DMS
+- Can be launched locally for development
+
+# ElastiCache
+
+- In-memory database (Redis or Memcached)
+
+## Redis
+- In-memory key-value store
+- Persistence (cache survive reboots)
+
+## Memcached
+- In-memory object store
+- Not persistence
