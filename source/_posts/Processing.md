@@ -9,7 +9,7 @@ tags: AWS - Big Data
 - Running little stateless code often used to glue different services
   - Real-time file / stream processing
   - ETL
-  - Cron job
+  - Cron job (use time as trigger)
   - Processing AWS events
 - Supported languages
   - Node.js
@@ -21,7 +21,7 @@ tags: AWS - Big Data
   - Ruby
 - Many AWS services can trigger Lambda
   - S3
-  - Kinesis
+  - Kinesis (Lambda is **pulling** the data from Kinesis in batches)
   - DynamoDB
   - SNS
   - SQS
@@ -36,7 +36,7 @@ tags: AWS - Big Data
 - Unlimited scalability (soft limit of 1000 concurrent)
 - Max timeout can be set is 900 seconds
 
-## Kinesis Data Streams to Lambda
+## Kinesis Data Streams + Lambda
   - Lambda can receive an event with a batch of stream records
     - Up to 10,000 records in a batch
     - Up to 6 MB in a function call (will be split automatically)
@@ -48,3 +48,15 @@ tags: AWS - Big Data
       - Provision more shards
   - Lambda processes shard data synchronously
     - Shards will not be released when data is being processed by Lambda
+
+## Anti-patterns
+- Long-running applications
+  - Max running time is 900s, use other services like Elastic Beanstalk
+- Dynamic websites
+  - Too much queries, use servers like EC2 instead
+- Stateful applications
+  - Lambda is stateless, use DynamoBD to store stateful data or use stateful services
+
+# AWS Glue
+
+- ETL service
