@@ -105,4 +105,3 @@ tags: AWS - Big Data
 # Amazon EMR
 
 
-K
