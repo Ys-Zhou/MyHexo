@@ -59,4 +59,50 @@ tags: AWS - Big Data
 
 # AWS Glue
 
-- ETL service
+- Discovery and definition of table definitions and schema form
+  - Redshift
+  - S3
+  - RDS
+  - Other RDBs
+- ETL jobs by
+  - Trigger-driven
+  - On a schedule
+  - On demand
+
+## Glue Crawler
+- Scans data in S3 and populate Glue Data Catalog
+  - Infer the schema automatically
+
+## Glue Data catalog
+- Central metadata repository
+  - Just store the data definition and do not remove the data itself
+  - Can used by Athena, Redshift, EMR, QuickSight, ect.
+- S3 Partitions
+  - Glue crawler will extract partitions based on how S3 data is organized
+  - Organize the data structure based on your query priority
+- EMR Hive
+  - Glue Data Catalog can provide metadata information to Hive
+  - You import a Hive meta store into glue
+
+## Glue ETL
+- Automatic code generation
+  - Scala or Python
+- Encryption at rest and in transit
+- Can be event-driven
+- Can provision additional Data Processing Units (DPU) to increase performance
+- Monitor through CloudWatch
+
+## Anti-patterns
+- Streaming data
+  - Glue is batch oriented, has minimum 5 minute intervals
+  - Use Kinesis and store data in S3 or Redshift in temporary
+- Using other ETL engines than Spark
+  - Glue ETL is implemented in Spark
+  - Use Data Pipeline or EMR
+- NoSQL databases
+  - Schema makes no sense for NoSQL databases
+
+# Amazon EMR
+
+
+K
