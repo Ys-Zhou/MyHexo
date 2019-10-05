@@ -105,3 +105,26 @@ tags: AWS - Big Data
 # Amazon EMR
 
 
+## AWS Integration
+- EC2 (different types)
+- VPC
+- S3
+- CloudWatch
+- IAM
+- CloudTrail
+- Data Pipeline (schedule and start clusters)
+
+## EMR Storage
+- HDFS
+  - EBS
+    - Can only be added when launching
+    - Will be regarded as failure when detach an EBS volume at running
+  - Ephemeral
+  - Resilient and durable (data are span multiple instances)
+  - Data block (chunk) size is 128 Mb
+- EMRFS
+  - S3
+  - Store input and output data
+  - Consistency
+    - EMRFS Consistent View
+    - Use DynamoDB to track consistency
