@@ -104,4 +104,80 @@ tags: AWS - Big Data
 
 # Amazon EMR
 
+- Elastic MapReduce
+- Managed Hadoop framework on EC2 instances
+- Tools
+  - Spark
+  - HBase
+  - Presto
+  - Flink
+  - Hive
+  - etc.
+- EMR Notebooks
+  - Query data interactively using Python
+- Integration with other AWS services
 
+## EMR Cluster
+- Master node (leader node)
+  - One master node in a cluster
+  - Coordinate the distribution of data and tasks
+- Core node
+  - Host HDFS data and run tasks
+  - Can be scaled up & down, but may lose data
+    - Because core nodes store data themselves
+- Task node
+  - run tasks but do not host data
+  - Good use of **spot instances**
+
+## EMR Usage
+- Cluster types
+  - Transient cluster
+  - Long-running cluster
+- Run jobs
+  - Connect directly to master to run jobs
+  - Submit ordered steps via the console
+
+## AWS Integration
+
+## EMR Promises
+- Provisions new nodes if core nodes fail
+- Can add and remove tasks nodes on the fly
+- Can resize running core nodes
+
+## Hadoop
+- MapReduce / Spark
+- YARN
+- HDFS
+
+### Spark
+- Distributed processing system
+- Use in memory caching
+- Use directed acyclic graphs to optimize query execution
+- Example use cases
+  - Stream processing through Spark Streaming (from Amazon Kinesis / Apache Kafka / etc.)
+  - Streaming analytics and write the results to HDFS or EMRFS (S3)
+  - Machine learning using MLLib
+  - Interactive SQL using Spark SQL
+- Can not do real time job like OLTP
+
+#### Spark structure
+- Driver program / driver script
+  - Spark Context
+  - Job code
+- Cluster Manager
+  - Spark / YARN
+  - AWS EMR uses YARN
+- Executors
+  - Cache
+  - Tasks
+
+#### Spark Components
+- Spark Streaming
+- Spark SQL
+- MLLib
+- GraphX
+
+#### Spark Structured Streaming
+- Spark Streaming will add new streaming data to the tail of exist data
+- Can use library built on Kinesis Client Library (KCL) to handle data from Kinesis Data Streams
+- Can do huge ETL on Redshift using Spark
