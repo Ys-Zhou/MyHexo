@@ -138,6 +138,28 @@ tags: AWS - Big Data
   - Submit ordered steps via the console
 
 ## AWS Integration
+- EC2 (different types)
+- VPC
+- S3
+- CloudWatch
+- IAM
+- CloudTrail
+- Data Pipeline (schedule and start clusters)
+
+## EMR Storage
+- HDFS
+  - EBS
+    - Can only be added when launching
+    - Will be regarded as failure when detach an EBS volume at running
+  - Ephemeral
+  - Resilient and durable (data are span multiple instances)
+  - Data block (chunk) size is 128 Mb
+- EMRFS
+  - S3
+  - Store input and output data
+  - Consistency
+    - EMRFS Consistent View
+    - Use DynamoDB to track consistency
 
 ## EMR Promises
 - Provisions new nodes if core nodes fail
@@ -192,27 +214,17 @@ tags: AWS - Big Data
 
 #### Hive Metastore
 - Structure definition on the unstructured data that is stored on HDFS, EMRFS, etc.
-- External Hive Metastore
-## AWS Integration
-- EC2 (different types)
-- VPC
-- S3
-- CloudWatch
-- IAM
-- CloudTrail
-- Data Pipeline (schedule and start clusters)
-
-## EMR Storage
-- HDFS
-  - EBS
-    - Can only be added when launching
-    - Will be regarded as failure when detach an EBS volume at running
+- Metastore is stored in MySQL on the master node by default
   - Ephemeral
-  - Resilient and durable (data are span multiple instances)
-  - Data block (chunk) size is 128 Mb
-- EMRFS
-  - S3
-  - Store input and output data
-  - Consistency
-    - EMRFS Consistent View
-    - Use DynamoDB to track consistency
+- External Hive Metastore
+  - AWS Glue Data Catalog
+    - Can be used by Redshift, Athena, etc.
+  - Amazon RDS
+
+#### Hive Integration
+- Load data from S3 with table partitions
+- Directly write data (tables) to S3
+- Load scripts from S3
+- Use DynamoDB as an external table
+
+### Apache Pig
