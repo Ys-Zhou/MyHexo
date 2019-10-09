@@ -145,7 +145,8 @@ tags: AWS - Big Data
 - Can resize running core nodes
 
 ## Hadoop
-- MapReduce / Spark
+- Hive
+- MapReduce / Spark / Tez
 - YARN
 - HDFS
 
@@ -181,3 +182,14 @@ tags: AWS - Big Data
 - Spark Streaming will add new streaming data to the tail of exist data
 - Can use library built on Kinesis Client Library (KCL) to handle data from Kinesis Data Streams
 - Can do huge ETL on Redshift using Spark
+
+### Apache Hive
+- Run SQL code (HiveQL) on unstructured data that live in Hadoop, Yarn, or S3
+- Easier and faster than writing MapReduce even Spark code for simple queries
+- Highly optimized 
+- Highly extensible
+  - External applications can communicate with hive using JDBC or ODBC
+
+#### Hive Metastore
+- Structure definition on the unstructured data that is stored on HDFS, EMRFS, etc.
+- External Hive Metastore
