@@ -167,10 +167,10 @@ tags: AWS - Big Data
 - Can resize running core nodes
 
 ## Hadoop
-- Hive
-- MapReduce / Spark / Tez
+- Hive / Pig (old)
+- MapReduce (old) / Spark / Tez
 - YARN
-- HDFS
+- HDFS -> HBase
 
 ### Spark
 - Distributed processing system
@@ -221,10 +221,41 @@ tags: AWS - Big Data
     - Can be used by Redshift, Athena, etc.
   - Amazon RDS
 
-#### Hive Integration
+#### Hive - AWS Integration
 - Load data from S3 with table partitions
 - Directly write data (tables) to S3
 - Load scripts from S3
 - Use DynamoDB as an external table
 
 ### Apache Pig
+
+#### Pig Latin
+- A scripting language
+- Use SQL-like syntax to define your map & reduce steps
+- Highly extensible with user-defined functions (UDF)
+
+#### Pig - AWS Integration
+- Query data in EMRFS (S3)
+- Load JARs or scripts from S3
+
+### HBase
+- Non-relational, petabyte-scale database
+- On the top of HDFS
+- Operate largely in memory across the entire cluster
+- Integration with Hive
+
+#### HBase vs. DynamoDB
+- HBase
+  - Efficient with sparse data
+  - Appropriate for high consistent reads & writes
+  - Higher write & update throughput
+  - More integration with Hadoop
+- DynamoDB
+  - Fully managed, auto-scaling
+  - More integration with other AWS services (like Glue)
+
+#### HBase - AWS Integration
+- Can build on the top of EMRFS (S3)
+- Can back up tp S3
+
+### Presto
