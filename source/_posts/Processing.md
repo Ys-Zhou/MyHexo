@@ -167,7 +167,8 @@ tags: AWS - Big Data
 - Can resize running core nodes
 
 ## Hadoop
-- Hive / Pig (old)
+- Zeppelin / EMR Notebook
+- Hive / Pig (old) / Presto
 - MapReduce (old) / Spark / Tez
 - YARN
 - HDFS -> HBase
@@ -259,3 +260,46 @@ tags: AWS - Big Data
 - Can back up tp S3
 
 ### Presto
+- Issue SQL style query
+- Can connect to different *big data* databases / data stores at once
+- Can issue interactive queries at petabyte scale
+- Optimized for OLAP (also not for OLTP)
+- Amazon Athena uses Presto under the hood
+- Can be used through JDBC, CLI, Tableau interfaces
+
+#### Presto Datasource
+- HDFS
+- S3 / EMRFS
+- Cassandra
+- MongoDB
+- HBase
+- RDBs
+- Redshift
+- Teradata
+
+### Zeppelin
+- Notebook
+  - Can interactively run code against data
+  - Can interleave with nicely formatted notes
+  - Can share notebooks with others on the cluster
+- Integration
+  - Spark
+  - Python
+  - JDBC
+  - HBase
+  - Elasticsearch
+  - etc.
+
+#### Zeppelin with Spark
+- Zeppelin can run Spark code interactively
+  - Speed up your development cycle
+  - Easier experimentation and exploration of your big data
+- Can execute SQL queries using SparkSQL
+- Query results can be visualized in charts and graphs
+
+### EMR Notebook
+- Notebook
+  - More AWS integration than Zeppelin
+- Automatically back up to S3
+- Can provision or shut down clusters directly from notebook
+- Hosted inside a VPC and can be accessed via AWS console
