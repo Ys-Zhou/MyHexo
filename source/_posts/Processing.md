@@ -303,3 +303,21 @@ tags: AWS - Big Data
 - Automatically back up to S3
 - Can provision or shut down clusters directly from notebook
 - Hosted inside a VPC and can be accessed via AWS console
+
+### Hue
+- Hadoop User Experience
+- Graphical front-end for applications on your EMR cluster
+- AWS integration
+  - IAM: Hue users inherit IAM roles
+  - S3: can use Hue to browse & move data between HDFS and S3
+
+### Splunk
+- Operational tool used to visualize EMR and S3 data using your EMR Hadoop cluster
+
+### Flume
+- A tool to stream data into your cluster
+
+### MXNet
+- A framework for building and accelerating neural networks
+
+### S3DistCP
