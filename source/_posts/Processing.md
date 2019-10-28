@@ -321,3 +321,44 @@ tags: AWS - Big Data
 - A framework for building and accelerating neural networks
 
 ### S3DistCP
+- Tool for copying large amounts of data between S3 and HDFS
+- Copy in a distributed manner
+  - Suitable for parallel copying of large numbers of objects
+  - Can copy across buckets, across accounts
+
+### Other Hadoop Tools
+- Ganglia (monitoring) 
+  - CouldWatch
+- Mahout (machine learning library)
+  - MXNet, TensorFlow
+- Accumulo (NoSQL database)
+  - HBase, DynamoDB
+- Sqoop (relational database connector)
+  - Can parallelize the coping of data between an RDB and your cluster
+- HCatalog (table and storage management for Hive metastore)
+- Kinesis Connector (access Kinesis streams in your scripts)
+- Tachyon (accelerator for Spark)
+- Derby (RDB)
+  - Implemented in Java
+- Ranger (data security manager for Hadoop)
+
+## EMR Security
+- IAM
+- Kerberos
+  - Provide strong authentication through secret key cryptography
+- SSH
+
+## Choosing EMR Instance Types
+- Master node:
+  - m4.large if < 50 nodes
+  - m4.xlarge if > 50 nodes
+- Core & task nodes:
+  - m4.large is usually good
+  - t2.medium if external dependencies (too much idle time)
+  - m4.xlarge for better performance
+  - Other considerations
+    - High CPU instances
+    - High memory instances
+    - Cluster computer instances
+- Spot instances
+  - Good for task nodes
