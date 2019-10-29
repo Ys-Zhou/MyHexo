@@ -362,3 +362,72 @@ tags: AWS - Big Data
     - Cluster computer instances
 - Spot instances
   - Good for task nodes
+- GPU instance types for deep learning
+
+# Amazon ML
+
+- Amazon Machine Learning
+  - Provides visualization tools & wizards to make creating a model easy
+  - Can train data from S3, Redshift, or RDS
+  - Can use prediction models using batches or low-latency API
+  - Can evaluate your model
+
+## Models in Amazon ML
+- Regression
+- Classification
+  - Multiclass
+  - Binary
+
+## Confusion Matrix
+- Visualize the accuracy of multiclass classification predictive models
+  - True label - predicted label matrix
+
+## Hyperparameters in Amazon ML
+- Learning rate
+- Model size
+- Number of passes
+- Data shuffling
+- Regularization
+
+## Promises & Limitations
+- No downtime
+- Soft limit up to 100 GB training data
+- Soft limit up to 5 simultaneous jobs
+
+## Anti-Patterns
+- Terabyte-scale data
+- Unsupported learning tasks
+  - Sequence prediction
+  - Unsupervised clustering
+  - Deep learning
+- Use EMR / Spark to build your own algorithms and models is an alternative
+
+# Amazon SageMaker
+
+- Use notebooks hosted on AWS to train large scale models and vent prediction
+  - Jupyter notebooks using Python
+- Can do GPU accelerated deep learning
+- Can scaling effectively unlimited
+- Easily doing hyperparameter tuning jobs
+
+## Vs. Amazon ML
+- Scales better
+- More flexibility
+- More advanced and modern algorithms
+- But need to write code
+
+## SageMaker Modules
+- Build
+- Train
+  - SageMaker Search: search training models
+- Deploy
+  - SageMaker Neo: deploy trained modes to any edges
+
+## SageMaker Security
+- Code stored in *ML storage volumes*
+  - Controlled by security groups
+  - Optionally encrypted at rest
+- Artifacts encrypted in transit and at rest
+- API & console secured by SSL
+- IAM roles
+- KMS integration for notebooks, training jobs, and endpoints
