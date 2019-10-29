@@ -431,3 +431,26 @@ tags: AWS - Big Data
 - API & console secured by SSL
 - IAM roles
 - KMS integration for notebooks, training jobs, and endpoints
+
+# AWS Data Pipeline
+
+- Task scheduling framework
+  - Process and move data between different AWS resources
+
+## Data Pipeline Features
+- Destinations
+  - S3, RDS, DynamoDB, Redshift, EMR
+- Retries and notifies on failures
+  - Retry 3 times by default, up to 10 times
+- Can run jobs cross-region
+- Can do precondition checks
+- On-premises sources can also use Data Pipeline
+  - Install Task Runner
+  - You can run multiple Task Runner for a job for high availability
+
+## Data Pipeline Activities
+- EMR jobs
+- Hive
+- Copy
+- SQL
+- Scripts
