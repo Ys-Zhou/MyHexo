@@ -90,3 +90,40 @@ tags: AWS - Big Data
 
 # Amazon Athena
 
+- Interactive query service for S3 in SQL
+- Use Presto
+- Supported data formats
+  - CSV
+  - JSON
+  - ORC (columnar, splittable)
+  - Parquet (columnar, splittable)
+  - Avro (splittable)
+
+## Athena Integration
+- Jupyter, Zeppelin, RStudio notebooks
+- QuickSight
+- Other visualization tools via ODBC / JDBC
+
+## Athena with Glue
+- Use Glue to define unstructured data in S3
+
+## Athena Cost Model
+- Successful and cancelled queries count, failed queries not
+- No charge for DDL
+- Save money by using columnar formats
+  - ORC, Parquet
+  - And better performance
+- Glue and S3 charge separately
+
+## Athena Security
+- Access control
+  - IAM, ACLs, S3 bucket policies
+  - Cross-account access in S3 bucket policy possible
+- Encrypt results at rest in S3 staging directory
+- TLS encrypts in transit
+
+## Athena anti-patterns
+- Highly formatted reports / visualization
+  - Use QuickSight
+- ETL
+  - Use Glue
