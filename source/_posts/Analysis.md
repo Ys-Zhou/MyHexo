@@ -127,3 +127,70 @@ tags: AWS - Big Data
   - Use QuickSight
 - ETL
   - Use Glue
+
+# Amazon Redshift
+
+- Fully-managed, petabyte scale data warehouse service
+- Designed for OLAP, not OLTP
+- SQL, ODBC, JDBC interfaces just like other RDB
+- Easily scale up and down manually
+- Built-in replication & backups
+
+## Redshift architecture
+- Redshift Cluster
+  - A leader node
+    - Manage communication with clients & compute nodes
+    - Receives queries form clients & develops execution plans
+    - Coordinates the parallel execution of those plans with compute nodes
+    - Aggregates the intermediate results from compute nodes
+  - 1~128 compute nodes
+    - Store user data
+    - Execute the steps in the execution plans
+    - Can transmit data among themselves
+    - Node types
+      - Dense storage (DS): xl or 8xl
+        - HDD
+        - Low costs
+      - Dense compute (DC): xl or 8xl
+        - SSD
+        - Larger memory
+        - Faster CPU
+    - Slices
+      - Each compute node is divided into slices
+      - A slice allocates a portion of the memory and disk storage of the node
+      - Size of slices is determined by the node size of the cluster 
+      
+## Redshift Spectrum
+- Query unstructured data in S3 like Redshift table without loading
+- Limitless concurrency & horizontal scaling
+- Support wide variety of data formats
+- Support Gzip and Snappy compression
+
+## Redshift Performance
+- Massively Parallel Processing (MPP)
+- Columnar Data Storage
+- Column Compression
+
+## Redshift Durability
+- Redshift has 3 copies of data
+  - An original copy within the cluster
+  - A backup repica copy within the cluster
+  - Continuously backed up to S3
+    - Can furthermore asynchronously replicated to another region
+      - Default retention period is 1 day, up to 35 days, 0 to turn off
+- Redshift will mirror each drive's data to another nodes within the cluster if there are 2 or more compute nodes
+  - Can detect a failed drive or node, and replace if automatically
+  - Drive failure
+    - Redshift will remain available but performance may be declined
+  - Node failure
+    - Redshift will be unavailable during recovery
+    - Most frequently access data from S3 is loaded first which you can querying as quickly as possible
+- Redshift is limited to a single AZ
+  - You have to restore the data from S3 in a different AZ when facing AZ failure
+
+## Redshift Scaling
+- Vertical and horizontal scaling on demand
+- During scaling
+  - A nwe cluster is created while old cluster remains available for reads
+  - CNMAE is flipped to new cluster with a few minutes of downtime
+  - Data moved in parallel to new compute nodes
