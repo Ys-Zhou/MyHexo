@@ -194,3 +194,53 @@ tags: AWS - Big Data
   - A nwe cluster is created while old cluster remains available for reads
   - CNMAE is flipped to new cluster with a few minutes of downtime
   - Data moved in parallel to new compute nodes
+
+## Redshift Distribution Styles
+- AUTO
+  - Default Style, choose one of EVEN, KEY, ALL depends on the size of data
+- EVEN
+  - Rows distributed across slices in round-robin
+- KEY
+  - Rows distributed based on a column hash
+- ALL
+  - Entire table is copied to every node
+
+## Redshift Sort Keys
+- Rows are stored on disk in sorted order based on the column designated as a sort key
+  - Like an index
+  - Makes for fast range queries
+- Single vs. Compound vs. Interleaved sort keys
+  - Single
+  - Compound (default): designate all the columns as sort keys
+    - Performance will decrease when queries depend only on secondary sort key without referencing the primary sort key
+    - The order is important
+    - Improve compression performance
+  - Interleaved: give equal weight to each column or subset of columns in the sort key
+    - When multiple queries use different columns for filters
+
+## Redshift Import / Export Data
+- COPY command
+  - Parallel
+  - From S3, EMR, DynamoDB, remote hosts vis SSH
+  - Copy from S3
+    - Use S3 object prefix or path
+    - Manifest file
+  - Authorization
+    - IAM role based
+    - Key based
+- UNLOAD command
+  - Efficient way to unload from a table into files in S3
+- Enhanced VPC routing
+  - Force all the traffic in a VPC than public Internet
+
+### Redshift Copy Grant for Cross-region Snapshot Copy
+- In the destination AWS region
+  - Create a KMS key or use an old one
+  - Specify an unique name for the copy grant
+  - Specify the KMS key ID for the copy grant
+In the source AWS region
+  - Enable copying of snapshots to the copy grant
+
+### DBLINK
+- Connect Redshift to PostgreSQL
+- Used to copy and sync data between PostgreSQL and Redshift
