@@ -14,7 +14,7 @@ tags: AWS - Big Data
 - Can use reference table from S3 to help analysis
 - Errors will be output to Error Stream
 
-## Use-cases
+## Kinesis Analytics Use Cases
 - Streaming ETL
 - Continuous metric generation
 - Responsive analytics
@@ -38,14 +38,14 @@ tags: AWS - Big Data
   - ES API
 - Horizontally scalable
 
-## Use Cases
+## ES Use Cases
 - Text search
 - Log analytics
 - Application monitoring
 - Security analytics
 - Click stream analytics
 
-## Concepts
+## ES Concepts
 - Documents
   - Text or JSON
 - Types
@@ -57,7 +57,7 @@ tags: AWS - Big Data
     - Write requests are routed to the primary shard, then replicated
     - Read requests are routed any shards
 
-## Features
+## ES Features
 - Full-managed but not serverless, ES runs based on EC2
   - Can scale up or down without downtime but should it manually
 - Network isolation (VPC)
@@ -68,7 +68,7 @@ tags: AWS - Big Data
   - Kinesis Data Streams
   - DynamoDB Streams
 
-## Options
+## ES Options
 - Dedicated master node(s)
   - Only used for the management and dose not hold or process data
   - Decide numbers and instance types
@@ -76,13 +76,13 @@ tags: AWS - Big Data
   - A collection of all the resources of a ES cluster
 - Automatic snapshots to S3
 
-## Security
+## ES Security
 - Resource, identity, IP-based policies
 - Request signing
 - VPC
 - Cognito
 
-## Anti-patterns
+## ES Anti-patterns
 - OLTP
   - RDS or DynamoDB
 - Ad-hoc data querying
@@ -136,7 +136,7 @@ tags: AWS - Big Data
 - Easily scale up and down manually
 - Built-in replication & backups
 
-## Redshift architecture
+## Redshift Architecture
 - Redshift Cluster
   - A leader node
     - Manage communication with clients & compute nodes
@@ -260,7 +260,7 @@ In the source AWS region
 - Avoid short, fast queries being stuck by long, slow queries
 - Setting by console, CLI, or API
 
-## VACUUM command
+## Redshift VACUUM Command
 - Clean table
 - VACUUM FULL (default)
   - Resort rows and reclaim space from deleted rows
