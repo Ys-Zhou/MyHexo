@@ -122,7 +122,7 @@ tags: AWS - Big Data
 - Encrypt results at rest in S3 staging directory
 - TLS encrypts in transit
 
-## Athena anti-patterns
+## Athena Anti-patterns
 - Highly formatted reports / visualization
   - Use QuickSight
 - ETL
@@ -221,7 +221,7 @@ tags: AWS - Big Data
 ## Redshift Import / Export Data
 - COPY command
   - Parallel
-  - From S3, EMR, DynamoDB, remote hosts vis SSH
+  - From S3, DynamoDB, EMR / EC2 / other remote hosts vis SSH
   - Copy from S3
     - Use S3 object prefix or path
     - Manifest file
@@ -244,3 +244,63 @@ In the source AWS region
 ### DBLINK
 - Connect Redshift to PostgreSQL
 - Used to copy and sync data between PostgreSQL and Redshift
+
+## Redshift Integration
+- S3
+  - COPY / UNLOAD command
+- DynamoDB
+  - COPY command
+- EMR / EC2
+  - COPY command via SSH
+- Data Pipeline
+- Database Migration Service (DMS)
+
+## Redshift Workload Management (WLM)
+- Manage query priorities using query queues
+- Avoid short, fast queries being stuck by long, slow queries
+- Setting by console, CLI, or API
+
+## VACUUM command
+- Clean table
+- VACUUM FULL (default)
+  - Resort rows and reclaim space from deleted rows
+- VACUUM DELETE ONLY
+- VACUUM SORT ONLY
+- VACUUM REINDEX
+  - Reinitialize **Interleaved** sort keys, then do VACUUM FULL
+
+## Redshift Security
+- Database can be encrypted using KMS or HSM
+
+## Redshift Anti-patterns
+- Small data sets
+  - Use RDS
+- OLTP
+  - Use RDS or DynamoDB
+- Unstructured data
+  - ETL first with EMR or Glue
+  - Or use Redshift Spectrum
+- BLOB data
+  - Use S3
+
+# Amazon RDS
+- Hosted relational database service
+- Not for *big data*
+
+## ACID
+- RDS offer full ACID compliance
+  - Atomicity
+  - Consistency
+  - Isolation
+  - Durability
+
+## Amazon Aurora
+- Up to 64TB per database instance
+- Up to 15 read replicas
+- Can continuous backup to S3
+- Can auto scaling with Aurora Serverless
+
+## Aurora Security
+- In VPC
+- At-rest with KMS
+- In-transit with SSL
