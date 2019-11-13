@@ -71,32 +71,107 @@ Key Storage and Management|Accessible from multiple regions. Centralized managem
 ## Kinesis
 - Kinesis Data Streams
   - SSL/TLS
-  - KMS
+  - Server-side encryption using KMS
   - Client-side encryption can only be implemented manually
-  - IAM roles
+  - IAM
     - **DynamoDB table when using KCL**
-  - Support VPC Endpoints
+  - VPC Endpoints (Interface Endpoints)
 - Kinesis Data Firehose
-  - Can encrypt the delivery stream with KMS
-  - IAM roles
+  - Can encrypt the delivery stream using KMS
+  - IAM
     - Deliver to S3, ES, Redshift, Splunk
-  - Support VPC Endpoints
+  - VPC Endpoints (Interface Endpoints)
 - Kinesis Data Analytics
-  - IAM roles
+  - IAM
     - Sources and destination (Kinesis Data Streams, Kinesis Data Firehose)
 
 ## SQS
 - SSL/TLS
-- KMS
+- Server-side encryption using KMS
 - Client-side encryption can only be implemented manually
-- IAM roles
+- IAM
 - **SQS queue access policy**
-- Support VPC Endpoints
+- VPC Endpoints (Interface Endpoints)
 
-## AWS IoT
+## IoT
 - IoT policies
   - Attached to X.509 or Cognito Identities
   - Can be attached to groups as well as individual Things
 - IAM
   - Used for controlling IoT APIs
   - Attach roles to Rules Engine to allow their actions
+
+## S3
+- SSL/TLS
+- Server-side encryption
+  - SSE-S3, SSE-KMS, SSE-C
+- Client-side encryption
+  - Such as S3 Encryption Client
+- IAM
+- S3 bucket policies
+- ACLs
+- Versioning + MFA when deleting
+- VPC Endpoints (Gateway Endpoints)
+- CORS for protecting websites hosted on S3
+- Vault lock policies to prevent deletes for Glacier
+
+## DynamoDB
+- SSL/TLS
+- KMS encryption
+  - Setting when creating the table
+  - To enable or disable encryption, create new table and copy the data
+- IAM
+  - Access to API / DAX
+- VPC Endpoints (Gateway Endpoints)
+
+## RDS
+- In VPC
+  - Can use Security Groups
+- SSL/TLS
+- KMS encryption
+- IAM
+- IAM authentication
+  - Support Aurora, PostgreSQL and MySQL
+  - Manage user permissions within the database itself
+- Microsoft SQL Server and Oracle support TDE (Transparent Data Encryption)
+
+## Lambda
+- KMS encryption for secrets
+  - Can use AWS Systems Manager Parameter Store as well
+- IAM
+  - Each function need roles
+- Can deploy function in VPC
+
+## Glue
+- IAM
+- KMS encryption
+  - Data Catalog, connection passwords
+- Encrypt data written by the job
+  - To S3: SSE-S3, SSE-KMS
+  - To CloudWatch
+  - To Job bookmark
+- Can enforce SSL on JDBC
+
+## EMR
+- SSH using EC2 key pairs
+- IAM
+- EC2 Security Groups
+  - One for master node
+  - Another for cluster nodes (core nodes and task nodes)
+- Encryption data at-rest
+  - EMRFS in S3
+    - SSE-S3, SSE-KMS
+    - CSE-KMS, CSE-C
+    - EMR dose not allow unencrypted data to be stored into S3
+  - Local disk
+    - Open-source HDFS encryption
+    - EBS volume encryption
+      - EBS encryption
+      - LUKS encryption
+- Encryption data in transit
+  - SSL/TLS
+- Kerberos authentication from Active Directory
+- Apache Ranger
+  - Centralized Authorization
+  - Role Based Access Control
+  - Need to setup on external EC2
