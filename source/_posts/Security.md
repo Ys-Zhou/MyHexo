@@ -125,7 +125,7 @@ Key Storage and Management|Accessible from multiple regions. Centralized managem
 - VPC Endpoints (Gateway Endpoints)
 
 ## RDS
-- In VPC
+- VPC
   - Can use Security Groups
 - SSL/TLS
 - KMS encryption
@@ -175,3 +175,93 @@ Key Storage and Management|Accessible from multiple regions. Centralized managem
   - Centralized Authorization
   - Role Based Access Control
   - Need to setup on external EC2
+
+## ElasticSearch
+- VPC
+- SSL/TLS
+- KMS
+- ElasticSearch policy
+- IAM or Cognito based authentication
+  - Cognito allow end-users to log-in to Kibna through enterprise identity providers such as Microsoft Active Directory using SAML 
+
+## Redshift
+- VPC
+  - Cluster security group
+- Encryption in flight using JDBC driver with SSL
+- Encryption at reat using KMS or **HSM**
+- IAM
+- COPY or UNLOAD command
+  - IAM roles need to be referenced or use your own credits
+  - COPY from or UNLOAD to S3, support both SSE-S3 and SSE-KMS
+ 
+## Athena
+- IAM
+- SSL/TLS between Athena and S3 or JDBC
+- Data in S3: Every security features in S3
+- Can use Glue Catalog security to restrict access
+
+## QuickSight
+- Standard edition
+  - IAM users
+  - Email based accounts
+  - Row Level Security Control
+- Enterprise edition
+  - Active Directory
+  - Federated Login
+  - MFA
+  - Encryption at rest and in SPICE
+
+# STS
+
+- Security Token Service
+- To grant limited and temporary access to AWS resources
+- Token is valid for up to 1 hour
+
+## Use Cases
+- Cross account access
+- Federation
+  - Active Directory
+  - SAML
+  - SSO (Single Sign On)
+- Federation with third party providers / Cognito
+  - Web or mobile application login
+
+## Cross Account Access
+- Define an IAM Role for another account ro access
+- Define accounts that can access the IAM Role
+- Use STS to retrieve credentials and impersonate the IAM Role
+- The temporary credentials can be valid between 15 minutes to 1 hour
+
+## Identity Federation
+- Let users outside of AWS to assume temporary role for accessing AWS resources
+- These users assume identity provided access role
+- Federations
+  - LDAP
+  - SAML
+  - Microsoft Active Directory (SAML)
+  - SSO
+  - Open ID
+  - Cognito
+
+### SAML
+- To integrate Active Directory or any SAML 2.0
+- Provides access to AWS resources without creating IAM user
+- If identity provider is not compatible with SAML 2.0
+  - Implement an identity broker
+
+### Cognito
+- Federated identity pools for public applications
+
+# CloudTrail
+
+- Provide governance, compliance and audit for your AWs Account
+- Track every API call made to your account
+- CloudTrail is enabled by default
+- Can pjut logs form CloudTrail into CloudWatch Logs
+- CloudTrail shows the past 90 days of activity
+- The default UI only shows *Create*, *Modify*, and *Delete* events
+- CloudTrail Trail
+  - Can get a detailed list of all the events you choose
+  - Ability ot stroe these events in S3 for further analysis
+  - Can be region specific or global
+- CloudTrail Logs hava SS3-S3 encryption when placed into S3
