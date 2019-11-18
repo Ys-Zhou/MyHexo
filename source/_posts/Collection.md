@@ -252,10 +252,10 @@ can be stored directly into S3
 - Delivery delay
 - Return
   - Message ID
-  - MD% hash of the body
+  - MD5 hash of the body
 
 ## Consuming Messages
-- Poll messages from SQS 
+- Pull messages from SQS 
   - Up to 10 messages at a time
 - Process the message within the visibility timeout
 - Delete the message by message ID & receipt handle
