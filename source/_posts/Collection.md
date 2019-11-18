@@ -197,7 +197,7 @@ categories:
   - JSON to Parquet
   - JSON to ORC (only for S3)
 - Support Data Transformation through AWS Lambda
-- Support Support compression (only for S3)
+- Support compression (only for S3)
   - GZIP, ZIP, Snappy
   - Only GZIP when data is further loaded into Redshift
 - Only pay for the amount of data going through Firehose
