@@ -265,3 +265,14 @@ Key Storage and Management|Accessible from multiple regions. Centralized managem
   - Ability ot stroe these events in S3 for further analysis
   - Can be region specific or global
 - CloudTrail Logs hava SS3-S3 encryption when placed into S3
+
+# VPC Endpoints
+
+- Allow you to connect to AWS Services using private network
+- No longer nedd IGW, NAT, etc.
+- Gateway type
+  - Provision a target and must be used in a route table
+  - Only S3 and DynamoDB
+- Interface type
+  - Provision an ENI as an entry point (need security group)
+  - Also called VPC PrivateLink
