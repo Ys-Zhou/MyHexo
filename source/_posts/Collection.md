@@ -255,7 +255,7 @@ can be stored directly into S3
   - MD5 hash of the body
 
 ## Consuming Messages
-- Pull messages from SQS 
+- Pull messages from SQS
   - Up to 10 messages at a time
 - Process the message within the visibility timeout
 - Delete the message by message ID & receipt handle
