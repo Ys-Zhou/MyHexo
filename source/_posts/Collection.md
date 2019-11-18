@@ -214,8 +214,8 @@ can be stored directly into S3
   - Buffer Size
   - Buffer Time
 - Automatically increase the buffer size to increase throughput
-- High through: more buffer size
-- Low through: less buffer time
+- High throughput: more buffer size
+- Low throughput: less buffer time
 
 ## Kinesis Data Streams vs Firehose
 |Streams|Firehose|
