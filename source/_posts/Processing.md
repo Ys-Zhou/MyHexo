@@ -73,7 +73,7 @@ tags: AWS - Big Data
 - Scans data in S3 and populate Glue Data Catalog
   - Infer the schema automatically
 
-## Glue Data catalog
+## Glue Data Catalog
 - Central metadata repository
   - Just store the data definition and do not remove the data itself
   - Can used by Athena, Redshift, EMR, QuickSight, ect.
