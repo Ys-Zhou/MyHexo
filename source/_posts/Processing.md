@@ -82,7 +82,7 @@ tags: AWS - Big Data
   - Organize the data structure based on your query priority
 - EMR Hive
   - Glue Data Catalog can provide metadata information to Hive
-  - You import a Hive meta store into glue
+  - You can import a Hive metastore into Glue
 
 ## Glue ETL
 - Automatic code generation
