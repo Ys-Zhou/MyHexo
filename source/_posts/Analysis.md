@@ -298,7 +298,7 @@ In the source AWS region
 - Up to 64TB per database instance
 - Up to 15 read replicas
 - Can continuous backup to S3
-- Can auto scaling with Aurora Serverless
+- Can auto scaling with Aurora serverless
 
 ## Aurora Security
 - In VPC
