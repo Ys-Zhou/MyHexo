@@ -235,9 +235,10 @@ tags: AWS - Big Data
 
 ### Redshift Copy Grant for Cross-region Snapshot Copy
 - In the destination AWS region
-  - Create a KMS key or use an old one
-  - Specify an unique name for the copy grant
-  - Specify the KMS key ID for the copy grant
+  - Create a KMS key or use an old one in the destination region
+  - Specify the KMS key ID for the copy grant in the destination region
+  - Specify an unique name for the copy grant and enable cross-region snapshot in the source region
+
 In the source AWS region
   - Enable copying of snapshots to the copy grant
 
