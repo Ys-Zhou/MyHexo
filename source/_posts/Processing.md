@@ -348,7 +348,7 @@ tags: AWS - Big Data
   - Provide strong authentication through secret key cryptography
 - SSH
 
-## Choosing EMR Instance Types
+## Choosing EMR Instance Types - 1
 - Master node:
   - m4.large if < 50 nodes
   - m4.xlarge if > 50 nodes
@@ -362,7 +362,17 @@ tags: AWS - Big Data
     - Cluster computer instances
 - Spot instances
   - Good for task nodes
-- GPU instance types for deep learning
+
+## Choosing EMR Instance Types - 2
+- General Purpose: T2, T3, M4, M5
+- Compute Optimized: C4, C5
+  - Batch, Analytics, Machine Learning
+- Memory Optimized: R4, R5, X1, Z1d
+  - In memory database, Real time analytics
+- Storage Optimized: H1, I3, D2
+  - HDFS, NFS, Map Reduce, Apache Kafka, Redshift
+- Accelerated Computing: P2, P3, G3, F1
+  - GPU instances: Deep Learning
 
 # Amazon ML
 
