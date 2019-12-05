@@ -39,4 +39,50 @@ tags: AWS - Solutions Architect
   - Set expiry dates on your instances to ensure they remain fresh
 
 ## ELB
+
+- Any requests sent to ELB DNS host name are delegated to a pool of EC2 instances
+- ELB is bound to a region
+- ELB detects unhealthy instances within its pool and automatically reroutes traffic to healthy instances, until the unhealthy have benn restored
+
+## Regions and AZs
+
+- Distributing your application geographically is a key element to achieving better fault tolerance
+- Regions consist of several AZs, are geographically dispersed
+- AZs are distinct locations in a Region
+  - Provide low latency network connectivity to other AZs in the same Region
+- EC2 SLA is 99.95% availability for each Region
+
+## Multi-AZ Architectures
+
+- Use redundant instances for each tier of an application
+- Use ELB to reduce manual intervention
+- Auto Scaling can work across multiple AZs in a Region
+
+## Route53
+
+- Can also use Route53 to build applications across Regions for higher availability
+
+## S3
+
+- S3 redundantly on multiple AZs in a Region
+- S3 Versioning and deletion MFA protect against accidental deletions
+- By using S3, you can delegate the responsibility of fault tolerance of data storage
+
+## RDS
+
+- Automated backups
+  - Enable point-in-time recovery for your database instance
+  - RDS will back up your database and **5-minutes-interval transaction logs** and store both for a user-specified retention period by default
+
+- Manual Snapshots
+  - You can create a new instances from a Snapshot
+  - Help you to recover from higher-level faults such as unintentional data modification
+  
+- Multi-AZ deployment
+  - Provision a synchronous standby replica of your database in a different AZ
+  - In case of failover scenario, the standby will be promoted to be the primary
+    - **Standby replica is different from read replica**
+
+# Using AWS for Disaster Recovery
+
 todo
