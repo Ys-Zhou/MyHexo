@@ -52,7 +52,7 @@ tags: AWS - Solutions Architect
   - Provide low latency network connectivity to other AZs in the same Region
 - EC2 SLA is 99.95% availability for each Region
 
-## Multi-AZ Architectures
+## Multi-AZ Architecture
 
 - Use redundant instances for each tier of an application
 - Use ELB to reduce manual intervention
@@ -85,4 +85,33 @@ tags: AWS - Solutions Architect
 
 # Using AWS for Disaster Recovery
 
-todo
+## RTO and RPO
+
+- Recovery Time Objective (RTO)
+  - The time it takes after a disruption to back to its service level
+- Recovery Point Objective (RPO)
+  - The acceptable amount of data loss measured in time
+
+## AMI for EC2
+
+- Configure and identify your own AMIs
+- You can copy your AIMs to other regions for disaster recovery
+
+## Storage Gateway
+
+- File gateway
+  - Store your file in S3
+- Volume gateway
+  - Cache Mode and Stored Mode
+  - Data on the volumes is stored in S3
+- Tape gateway
+  - Use Virtual Tape Library to backup your data to S3 or Glacier (Virtual Tape Shelf, VTS)
+
+## AWS Import/Export
+
+- Use Snowball to migrate your data into S3, Glacier, or EBS snapshots
+
+## VM Import/Export
+
+- Import virtual machine images from your existing environment to EC2 instances or vice versa
+- No charge
