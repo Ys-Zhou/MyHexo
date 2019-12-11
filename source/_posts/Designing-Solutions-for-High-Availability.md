@@ -77,7 +77,7 @@ tags: AWS - Solutions Architect
 - Manual Snapshots
   - You can create a new instances from a Snapshot
   - Help you to recover from higher-level faults such as unintentional data modification
-  
+
 - Multi-AZ deployment
   - Provision a synchronous standby replica of your database in a different AZ
   - In case of failover scenario, the standby will be promoted to be the primary
@@ -92,26 +92,114 @@ tags: AWS - Solutions Architect
 - Recovery Point Objective (RPO)
   - The acceptable amount of data loss measured in time
 
-## AMI for EC2
+## Disaster Recovery Features
+
+### AMI for EC2
 
 - Configure and identify your own AMIs
 - You can copy your AIMs to other regions for disaster recovery
 
-## Storage Gateway
+### Storage Gateway
 
 - File gateway
   - Store your file in S3
 - Volume gateway
-  - Cache Mode and Stored Mode
+  - Cached Mode and Stored Mode
   - Data on the volumes is stored in S3
 - Tape gateway
   - Use Virtual Tape Library to backup your data to S3 or Glacier (Virtual Tape Shelf, VTS)
 
-## AWS Import/Export
+### AWS Import/Export
 
 - Use Snowball to migrate your data into S3, Glacier, or EBS snapshots
 
-## VM Import/Export
+### VM Import/Export
 
 - Import virtual machine images from your existing environment to EC2 instances or vice versa
 - No charge
+
+### VPC
+
+- Use VPC to extend your existing network
+  - Through VPN
+  - Direct Connect
+
+### RDS
+
+- RDS gives you the ability to snapshot data form one region to another
+- RDS can run a read replica in another region
+
+### DynamoDB
+
+- DynamoDB allows you to copy data to DynamoDB in another region or to S3
+
+### Redshift
+
+- You can snapshot your Redshift to S3 within the same region or copy to another region 
+
+### Other services
+
+- S3
+- EBS
+- Route53
+- ELB
+
+## Disaster Recovery Approaches
+
+- Cost (low -> high) & recovery speed (slow -> fast)
+  - Backup & Restore
+  - Pilot Light
+    - A minimal version of an environment is always running in the cloud
+  - Warm standby
+  - Multi Site
+
+### Backup & Restore
+
+- S3 & Glacier
+  - An ideal destination for backup data
+  - Transferring data to/from S3
+    - Internet
+    - Direct Connect
+    - AWS Import/Export (Snowball)
+
+- Storage Gateway
+  - Volume Gateway
+    - Stored mode (Gateway Stored)
+      - Enables snapshots of your on-premises data volumes to be transparently copied into S3 for backup
+    - Cached mode (Gateway Cached)
+      - Allows you to store your data in S3, and keep your frequently accessed data local
+  - Tape Gateway
+    - Can be set as a backup target for your existing backup management software
+    - Can be used as a replacement for traditional tape backup
+
+- Key steps for backup and restore
+  - Select an appropriate tool or method to back up your data into AWS
+  - Ensure that your have an appropriate retention policy for the data
+  - Ensure that appropriate security measures (encryption and access policies) are in place for the data
+  - Regularly test the recovery of the data and the restoration of your system
+
+### Pilot Light
+
+- Only run the most critical core elements of your systems in AWS
+  - You can rapidly provision a full-scale production environment around the critical core
+  - The critical core elements typically include database servers, which would be replicated to EC2 or RDS
+
+- Main options for provisioning for recovery
+  - Use EIP
+  - Use ELB
+
+- Key steps for preparation
+  - Set up EC2 instances to replicate
+  - Ensure that all custom software packages are available in AWS
+  - Create and maintain AMIs of key servers
+  - Regularly run these servers, test them and apply updates
+  - Consider automating the provisioning of AWS resources
+
+- Key steps for recovery
+  - Start your application EC2 instances from your custom AMIs
+  - Resize database/data store instances according to the increased traffic
+  - Add additional database/data store instances to ensure the resilience in the data tier
+    - If using RDS, turn on Multi-AZ
+  - Change DNS to point at the EC2 servers
+    - Either EIP or ELB
+  - Install and configure any non-AMI based systems, ideally in an automated way
