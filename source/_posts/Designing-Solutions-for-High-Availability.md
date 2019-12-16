@@ -203,3 +203,51 @@ tags: AWS - Solutions Architect
   - Change DNS to point at the EC2 servers
     - Either EIP or ELB
   - Install and configure any non-AMI based systems, ideally in an automated way
+
+### Warn Standby
+
+- A scaled-down version of the fully functional environment is always running in the cloud
+- These servers can be running on a minimum-sized fleet of EC2 instances on the smallest sizes
+
+- Key steps for preparation
+  - Set up EC2 instances to replicate
+  - Create and maintain AMIs
+  - Run your application using a minimal footprint of EC2 instances
+  - Patch and update software and configuration files in line with your live environment
+
+- Key steps for recovery
+  - Increase the number of EC2 fleets in service with ELB (horizontal scaling)
+  - Start applications on larger EC2 instance types (vertical scaling)
+  - Either manually change the DNS, or use Route53 automated health checks so that all traffic is routed to the AWS environment
+  - Consider using Auto Scaling to right-size the fleet or accommodate the increased load
+  - Add resilience or scale up your database
+
+### Multi Site
+
+- A multi-size solution runs in AWS as well as on your existing on-site infrastructure, in an active-active configuration
+- You can replicate your data in synchronous or asynchronous methods
+- You can use Route53 to support weighted routing
+
+- Key steps for preparation
+  - Set up your AWS environment ro duplicate your production environment
+  - Set up DNS such as Route53 to distribute incoming requests to both sites
+  - Configure automated failover to re-route traffic away from the affected site
+
+- Key steps for recovery
+  - Either manually or by using DNS failover, change the DNS weighting so that all requests are sent to the AWS site
+  - Have application logic for failover to use the AWS database servers for all queries
+  - Consider using Auto Scaling to automatically right-size the AWS fleet
+
+## Replication of Data
+
+- Distance between the sites
+- Available bandwidth
+- Data rate required by your application
+- Replication technology (like using parallel)
+
+## Self Healing
+
+- SQS to decouple
+- CloudWatch and Auto Scaling to terminate unhealthy instances
+  - Auto Scaling to create replacement instances to replace terminated instances
+- S3 and Glacier performs regular, systematic data integrity checks and is built to be automatically self-healing
