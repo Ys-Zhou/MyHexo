@@ -1,8 +1,12 @@
+# file system
 .DS_Store
 Thumbs.db
+
+# idea
 .idea
 *.iml
 
+# project
 .deploy*
 node_modules
 public
