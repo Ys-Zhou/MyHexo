@@ -113,7 +113,7 @@ tags: AWS - Solutions Architect
   - The predicted usage will incur in charges bu the end of the month
 - Can send notifications using SNS
   - When the usage goes over the budgeted amounts
-  - When the estimated costs excees the configured budgets
+  - When the estimated costs exceed the configured budgets
 - Budgets information is updated up to three times a day
 - Budget types
   - Cost budgets
