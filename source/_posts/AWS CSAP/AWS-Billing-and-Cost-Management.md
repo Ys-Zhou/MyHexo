@@ -84,8 +84,44 @@ tags: AWS - Solutions Architect
 - AWS Single Sign-On (SSO)
   - Allows users to use SSO to access their assigned accounts (master or member)
 
+## Best Practices
+
+- Use AWS CloudTrail to monitor and log activities in the master account
+- Do not add resources in the master account
+- Use the least privilege principle for SCPs
+- Assign ACPs at Organizational Units instead of accounts for easy scaling
+- Avoid assigning SCPs at the root level, unless absolutely necessary
+- Test your SCPs first on an account before rolling out
+- Use either Whitelisting or Blacklisting, not both
+- Establish a clear strategy as to when to create a new account
+
 # AWS Billing Management
 
 ## AWS Cost Explorer
 
+- View cost data as a graph
+  - Can filter graphs by different values
+  - Can filter by member account when using consolidated billing
+- Get forecast of future costs based on the historical cost data
+
 ## AWS Budgets
+
+- Plan service usage, costs, and instance reservations
+- Budgets provide:
+  - The resources usage to date, including Reserved Instances
+  - The set budgets usage
+  - The predicted usage will incur in charges bu the end of the month
+- Can send notifications using SNS
+  - When the usage goes over the budgeted amounts
+  - When the estimated costs excees the configured budgets
+- Budgets information is updated up to three times a day
+- Budget types
+  - Cost budgets
+  - Usage budgets
+  - Reserved Instances utilization budgets
+    - Alert when the usage of Reserved Instances falls below the threshold
+  - Reserved Instances coverage budgets
+    - Alert when the instance hours covered by Reserved Instances fall below the threshold
+- AWS Budgets uses AWS Cost Explorer to visualize costs
+
+25? 27-31
