@@ -124,4 +124,28 @@ tags: AWS - Solutions Architect
     - Alert when the instance hours covered by Reserved Instances fall below the threshold
 - AWS Budgets uses AWS Cost Explorer to visualize costs
 
-25? 27-31
+## Consolidated Billing
+
+- Consolidated billing is a feature of AWS Organizations
+- Consolidate multiple member accounts under your master account
+- Take advantage of pricing tiers (combined usage)
+  - AWS treats all accounts in an organization as a single account
+- Share reserved instances
+  - Enabled by default, can be disabled by master account
+
+### Consolidated Billing vs. One Account with Multiple VPCs
+
+- Consolidated Billing
+  - Easier from an AWS architecture perspective
+  - Primarily relies on IAM roles and attached permissions for cross account access
+  - Complex tagging cross accounts
+
+- One Account with Multiple VPCs
+  - Simple billing
+  - Easier governance
+  - No need for IAM roles cross-account
+  - Easier tagging
+  - Complex setup to allow for resource level permissions
+  - Complexity in setting up the VPCs
+
+28-31
