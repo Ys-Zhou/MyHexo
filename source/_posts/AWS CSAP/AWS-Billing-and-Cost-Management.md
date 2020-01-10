@@ -148,4 +148,35 @@ tags: AWS - Solutions Architect
   - Complex setup to allow for resource level permissions
   - Complexity in setting up the VPCs
 
-28-31
+## Alert
+
+- Send to
+  - email
+  - SNS
+
+## Cost Allocation Tags
+
+- Key-value pairs
+- Used to organize the resource costs on the cost allocation report
+- Tag types
+  - AWS generated tags
+  - User defined tags
+- Member accounts in AWS Organizations cannot manage Cost Allocation Tags
+- You cannot delete tags
+  - Instead, you can deactivate tags
+- Resource Group
+  - If resources share one or more tags, they are in a same Resource Group
+
+## Cost Optimization
+
+- EC2 instance sizing
+  - Use benchmarking not gassing
+  - Storage solution
+    - Volume types
+    - Use storage optimized instances
+    - S3
+- Continuous monitoring and tagging
+  - Modify resources anytime
+  - Tagging strategies on AWS
+    - Automate by using Elastic Beanstalk or OpsWorks
+    - Use AWS Config to assess whether specific tags are applied to your resources or not
