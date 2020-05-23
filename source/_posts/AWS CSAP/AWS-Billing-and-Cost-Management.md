@@ -124,4 +124,59 @@ tags: AWS - Solutions Architect
     - Alert when the instance hours covered by Reserved Instances fall below the threshold
 - AWS Budgets uses AWS Cost Explorer to visualize costs
 
-25? 27-31
+## Consolidated Billing
+
+- Consolidated billing is a feature of AWS Organizations
+- Consolidate multiple member accounts under your master account
+- Take advantage of pricing tiers (combined usage)
+  - AWS treats all accounts in an organization as a single account
+- Share reserved instances
+  - Enabled by default, can be disabled by master account
+
+### Consolidated Billing vs. One Account with Multiple VPCs
+
+- Consolidated Billing
+  - Easier from an AWS architecture perspective
+  - Primarily relies on IAM roles and attached permissions for cross account access
+  - Complex tagging cross accounts
+
+- One Account with Multiple VPCs
+  - Simple billing
+  - Easier governance
+  - No need for IAM roles cross-account
+  - Easier tagging
+  - Complex setup to allow for resource level permissions
+  - Complexity in setting up the VPCs
+
+## Alert
+
+- Send to
+  - email
+  - SNS
+
+## Cost Allocation Tags
+
+- Key-value pairs
+- Used to organize the resource costs on the cost allocation report
+- Tag types
+  - AWS generated tags
+  - User defined tags
+- Member accounts in AWS Organizations cannot manage Cost Allocation Tags
+- You cannot delete tags
+  - Instead, you can deactivate tags
+- Resource Group
+  - If resources share one or more tags, they are in a same Resource Group
+
+## Cost Optimization
+
+- EC2 instance sizing
+  - Use benchmarking not gassing
+  - Storage solution
+    - Volume types
+    - Use storage optimized instances
+    - S3
+- Continuous monitoring and tagging
+  - Modify resources anytime
+  - Tagging strategies on AWS
+    - Automate by using Elastic Beanstalk or OpsWorks
+    - Use AWS Config to assess whether specific tags are applied to your resources or not
