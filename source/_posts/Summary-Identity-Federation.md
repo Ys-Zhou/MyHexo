@@ -85,3 +85,58 @@ tags: AWS - Solutions Architect
   - AWS recommends using Cognito instead
 - **GetSessionToken**: for MFA, obtain user credentials
 - **GetFederationToken**: obtain credentials for a federated user
+
+# Identity Federation
+
+- Federation lets users outside of AWS to assume temporary role for accessing AWS resources
+- Without creating IAM users
+- Flavors of Federations
+  - SAML 2.0
+  - Custom Identity Broker
+  - Web Identity Federation without Cognito
+  - Web Identity Federation with Cognito
+  - SSO
+  - Non-SAML with AWS Microsoft AD
+
+## SAML 2.0
+
+- Integrate SAML 2.0 compatible IdP or ADFS
+- AWS recommends using Amazon SSO instead
+- Setup
+  - Setup a trust between AWS IAM and SAML (both ways)
+  - SAML 2.0 enables web-based cross domain SSO
+  - Uses STS API: AssumeRoleWithSAML
+
+## Custom Identity Broker
+
+- Use only if Idp is not compatible with SAML 2.0
+- The identity broker talks with STS and must determine the appropriate IAM policy
+- Uses STS API: AssumeRole or GetFederationToken
+
+## Web Identity Federation without Cognito
+
+- Get credentials from Web IdP such as Amazon, Google and Facebook
+- AWS recommends using Cognito instead
+- Uses STS API: AssumeRoleWithWebIdentity
+
+## Web Identity Federation with Cognito
+
+- Create IAM Roles using Cognito with the least privilege needed
+- Build trust between the OIDC IdP and AWS
+- Benefits
+  - Support for anonymous users
+  - Support for MFA
+  - Data synchronization
+- Cognito as a new service replaces Token Vending Machine (TVM)
+
+## Use Web Identity Federation in IAM Policy
+
+- You can identify the user with an IAM policy variable
+- Examples
+  - cognito-identity.amazonaws.com:sub
+  - www.amazon.com:user_id
+  - accounts.google.com:sub
+
+# AWS Directory Services
+
+To be edited
