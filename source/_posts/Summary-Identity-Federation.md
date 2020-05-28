@@ -139,4 +139,107 @@ tags: AWS - Solutions Architect
 
 # AWS Directory Services
 
-To be edited
+## Microsoft Active Directory (AD)
+
+- Microsoft Active Directory (AD)
+  - Centralized security management, create account, assign permissions
+- Active Directory Federation Service (ADFS)
+  - Provide SSO across applications using AD
+
+## AWS Directory Services
+
+- AWS Managed Microsoft AD
+  - Create your own AD in AWS
+  - Users are managed in AWS
+  - Supports MFA
+  - Establish *trust* connections with your on-premise AD
+- AD Connector
+  - Directory Gateway (proxy) to redirect to on-premise AD
+  - Users are managed on the on-premise AD
+- Simple AD
+  - AD-compatible managed directory in AWS
+  - Cannot be joined with on-premise AD
+
+### AWS Managed Microsoft AD
+
+- A managed AD in your AWS VPC
+- Integrations
+  - EC2 Windows Instance
+  - RDS for SQL Server, AWS Workspaces, Quicksight, ect.
+  - AWS SSO to provide access to 3rd party applications
+- Can be joined to on-premise AD
+  - AD two-way forest trust
+- Multi-AZ deployment
+  - two AZ by default
+  - Can be increased for scaling
+- Automated backups
+
+#### Connect to on-premise AD
+
+- Must establish a Direct Connect or VPN connection
+- Forest trust
+  - One-way trust
+    - AWS -> On-premise
+    - On-premise -> AWS
+  - Two-way trust
+    - AWS <-> On-premise
+- Directly replication between AWS Managed AD and On-premise AD is not supported
+  - Solution
+    - Replication your on-premise AD to a EC2 Windows instance managed by yourself
+    - Establish trust between the AWS Managed AD and AD in EC2
+    - For low latency, you can deploy the EC2 instance and AWS Managed AD in one VPC
+
+### AD Connector
+
+- A gateway to redirect requests to your on-premises AD
+- Must establish a Direct Connect or VPN connection
+- No caching capability
+- Does not integrate with AWS services or joining EC2 instances
+
+### Simple AD
+
+- Lower cost, low scale
+- Compatible with Microsoft AD
+- Supports joining EC2 instances
+- Does not support MFA
+- Does not integrate with AWS services
+- Cannot setup trust relationship
+
+# AWS Organizations
+
+- One master account and many child accounts
+  - Master account can invite exists child accounts or create new child accounts
+- Master account can access child accounts
+  - Create IAM roles in child accounts
+  - Assume the roles using the STS Cross Account capability
+- Can automatically create AWS account using API
+- Integration with AWS SSO
+
+## Feature Modes
+
+- Consolidated Billing Only
+  - Consolidated billing across all accounts
+  - Pricing benefits from aggregated usage
+- All Features (Default)
+  - Includes consolidated billing
+  - Able to use Service Control Policy (SCP)
+  - You can apply an SCP to prevent member accounts from leaving thr organization
+  - Invited accounts must approve enabling all features
+  - Cannot switch to Consolidated Billing Only
+
+## Organizational Units (OU)
+
+- An OU is a group of accounts and OUs
+- Root OU
+
+## Service Control Policies (SCP)
+
+- Applied at the OU or account level
+- SCP does not affect service-linked roles
+- SCP must have an explicit Allow (does not allow anything by default)
+- Blacklist or Whitelist strategies
+
+## Reserved Instances
+
+- Reserved Instances are shared across all accounts
+- The payer account (master account) can turn off RI discount and Savings Plans discount sharing for any accounts in the organization
