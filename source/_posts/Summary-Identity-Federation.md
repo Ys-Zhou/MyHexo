@@ -243,3 +243,36 @@ tags: AWS - Solutions Architect
 
 - Reserved Instances are shared across all accounts
 - The payer account (master account) can turn off RI discount and Savings Plans discount sharing for any accounts in the organization
+
+# AWS Resource Access Manager (RAM)
+
+- Share AWS resources that you own with other AWS accounts
+- You can choose to share with any account or within you Organization
+- Share VPC Subnets
+  - Allow different accounts to have resources launched in the same subnets
+  - Accounts must be from the same AWS Organizations
+  - Cannot share security groups and default VPC
+  - One account cannot view, modify, delete, resources that belong to other accounts
+- Can also share
+  - Route53 Resolver Rules
+  - License Manager Configurations
+  - etc.
+
+# AWS Single Sign-On (SSO)
+
+- Centrally manage SSO to access multiple accounts and 3rd party applications
+- Supports SAML 2.0
+- Integration with AWS Organizations
+- Integration with AD including on-premise AD
+- Centralized permission management
+- Centralized auditing with CloudTrail
+
+## SSO vs. AssumeRoleWithSAML
+
+- AssumeRoleWithSAML
+  - Use 3rd party IdP Login Portal
+    - Return SAML credential
+  - Talk with STS to assume a role
+- SSO
+  - Talk with SSO only to assume a role
+    - Use STS under the hook
