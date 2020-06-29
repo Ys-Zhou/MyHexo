@@ -244,3 +244,61 @@ tags: 'AWS - Solutions Architect'
   - Block an object version deletion for a specified amount of time
 - Glacier Vault Lock
   - Lock the objects for future edits
+
+# Network Security
+
+## VPC Security
+
+### Security Groups
+
+- Attached to ENI, works for anything in VPC (like EC2, RDS, Lambda)
+- Stateful (any traffic is allowed go in/out, can also go back out/in)
+- The source can be CIDR or another security group ID
+  - Can be security group in another VPC using VPC peering
+- Allowed rule only
+- Default: no inbound rule, an all outbound allowed rule
+
+### Network ACLs
+
+- Attached to subnet
+- Stateless
+- The source can be CIDR
+- Default: allow all inbound, allow all outbound
+- New ACL: deny all inbound, deny all outbound
+
+## AWS Shield
+
+- AWS Shield Standard
+  - Free
+  - Provides layer 3 / layer 4 DDoS attack protection
+- AWS Shield Advanced
+  - $3000 per month per organization
+  - Provides protection against more sophisticated DDoS attacks
+  - 7\*24 access to AWS DDoS response team
+  - No extra fees during usage spikes due to DDoS
+
+## AWS Web Application Firewall (WAF)
+
+- Provides layer 7 attack protection
+- Can only be deployed to ALB, API Gateway, CloudFront
+- Need define Web ACL
+  - Rule can be IP addresses, HTTP headers, HTTP body, or URI strings
+  - Protects from SQL injection and XSS
+  - Size constraints
+  - Geo match
+  - Rate-based rules
+
+## AWS Firewall Manager
+
+- Manage rules in all accounts of an AWS Organization
+  - Security Groups
+  - AWS Shield Advanced
+  - WAF rules
+
+## DDoS Protection
+
+- AWS Shield: protects against DDoS attack
+- AWS WAF: filter specific requests based on rules
+- CloudFront and Route 53: combined with AWS Shield
+- Use Auto Scaling
+- Separate static resources to S3 or CloudFront from dynamic ones (EC2 or ELB)
