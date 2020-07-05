@@ -302,3 +302,60 @@ tags: 'AWS - Solutions Architect'
 - CloudFront and Route 53: combined with AWS Shield
 - Use Auto Scaling
 - Separate static resources to S3 or CloudFront from dynamic ones (EC2 or ELB)
+
+## Blocking an IP Address
+
+- NACL
+- WAF with ALB or CloudFront
+- NACL will not work when using CloudFront (because access is from CloudFront)
+
+# AWS Inspector
+
+- Analyze **running EC2 instances** against known vulnerabilities and unintended network accessibility
+- AWS Inspector Agent must be installed in EC2 instances
+- Define template with AWS managed rules
+  - no custom rules
+
+# AWS Config
+
+- Records configurations and changes over time to audit and record compliance of your AWS resources
+- You can receive SNS notifications for any changes
+- Is a regional service
+- Can be aggregated across regions and accounts
+
+## AWS Config Resource
+
+- View compliance of a resource over time
+- View configuration of a resource over time
+- View CloudTrail API calls if enabled
+
+## AWS Config Rules
+
+- Use AWS managed config rules
+- Make custom config rules (defined in AWS Lambda)
+- Rules will be evaluated
+  - For each config change
+  - At regular time intervals
+  - Can trigger CloudWatch Events if the rule is non-compliant
+- Rules can have auto remediations
+  - If a resource is not compliant, you can trigger an auto remediation
+  - Define the remediation through **SSM Automations**
+
+# AWS Managed Logs
+
+- CloudTrail Logs -> S3 and CloudWatch Logs
+- VPC FLow Logs -> S3 and CloudWatch Logs
+- ELB Access Logs -> S3
+- Route 53 Access Logs -> CloudWatch Logs
+- S3 Access Logs -> S3
+- CloudFront Access Logs -> S3
+- AWS Config -> S3
+
+# AWS GuardDuty
+
+- Intelligent Threat discovery to Protect AWS Account
+- Input data
+  - CloudTrail Logs
+  - VPC Flow Logs
+  - DNS Logs
+- Can setup CloudWatch Event rules to be notified
