@@ -109,3 +109,135 @@ tags: 'AWS - Solutions Architect'
 - Solution 1: Create new instances with the new template in the same ASG, and terminate old instances later
 - Solution 2: Create a new ASG connected to the same load balancer, and split traffic between ASGs
 - Solution 3: Create a new load balancer, use Route 53 CNAME weight record to split traffic (has risks because it's based on DNS)
+
+# ECS
+
+- Classic ECS: Running ECS on user-provisioned EC2 instances
+- Fargate: Running ECS tasks on AWS managed compute (serverless)
+- EKS: ECS for Kubernetes
+- ECR: Docker Container Registry hosted by AWS
+
+## ECS Concepts
+
+- Cluster
+- Service
+- Tasks & task definition: containers running to create the applications
+
+## ALB Port Mapping
+
+- Allows you to run multiple instances of the same application on the same EC2 instance
+
+## ECS Security & Networking
+
+- IAM security
+  - EC2 Instance Role must have basic ECS permissions
+  - ECS Task level should have an IAM Task Role
+- Integration with SSM Parameter Store & Secrets Manager
+- Tasks networking
+  - none: no network, no port mappings
+  - bridge: use Docker's virtual network
+  - host: use the underlying host network interface
+  - awsvpc
+    - A task has its own ENI and a private address
+    - Enhanced security with Security Groups, monitoring, and VPC flow logs
+    - Default mode for Fargate
+
+## ECS Auto Scaling
+
+- CPU and **RAM** is tracked in CloudWatch at ECS service level
+- ESC Service Auto Scaling cannot auto scale EC2 instances
+- Fargate Auto Scaling is easier to use (serverless) 
+
+# AWS Lambda
+
+## Lambda Runtime
+
+- Node.js
+- Python
+- Ruby
+- Java
+- Golang
+- C#
+- Powershell
+
+## Lambda Limits
+
+- RAM: 128 MB to 3G
+- Timeout: 15 minutes
+- Storage: up to 512 MB
+- Deployment package: up to 250 MB
+- Concurrency: 1000 (soft limit)
+- Latencies
+  - Cold Invocation: ~100 ms
+  - Warm Invocation: ~ms
+  - Use Provisioned Concurrency to keep some functions warm
+  - Use X-Ray to trace end-to-end latency
+
+## Lambda Security
+
+- IAM Roles
+- Lambda Resource-based Policies
+
+## Lambda in VPC
+
+- Lambda can be deployed in VPC
+- Connect internet from private subnet
+  - Use NAT and IGW
+  - Use Endpoints
+- CloudWatch do not need NAT or Endpoint
+
+## Lambda Logging
+
+- CloudWatch
+  - CloudWatch Logs
+  - CloudWatch Metrics display Lambda metrics
+  - Make sure Lambda has correct IAM role to write logs to CloudWatch Logs
+- X-Ray
+  - Trace Lambda
+  - Need enable in Lambda configuration or use AWS SDK in Code
+
+## Lambda Invocation Types
+
+- Synchronous Invocations
+  - Results is returned right away
+  - Client need handle the errors
+- Asynchronous Invocations
+  - Lambda attempts to retry on errors (up to 3 times)
+  - Make sure the processing is idempotent
+  - Can define a DLQ (to SNS or SQS) for failed processing
+- Event Source Mapping
+  - Pull batches from stream sources
+    - Kinesis Data Streams
+    - SQS
+    - DynamoDB Streams
+  - If your function returns an error, the entire batch is reprocessed until success
+
+## Lambda Destinations
+
+- Can configure to send result to a destination
+- In asynchronous invocations, can define destinations for successful and failed event to
+  - SQS
+  - SNS
+  - Lambda
+  - EventBridge bus
+- In Event Source Mapping, can send discarded event batches to
+  - SQS
+  - SNS
+- AWS recommends you use destinations instead of DLQ
+
+## Lambda Versions & Aliases
+
+- Versions
+  - Versions have increasing version numbers
+  - Versions are immutable, Any changes to a function will publish new versions
+  - Latest version is marked as $LATEST, which is default version
+  - Versions get their own ARN
+- Aliases
+  - An alias point to a version
+  - Aliases are mutable and can be defined by user
+  - Use aliases to do Blue / Green deployment
+    - CodeDeploy can help to automate traffic shift
+    - Linear: grow traffic every N minutes until 100%
+    - Canary: try at x% then jump to 100%
+    - AllAtOnce: immediate
+  - Aliases get their own ARN
