@@ -241,3 +241,152 @@ tags: 'AWS - Solutions Architect'
     - Canary: try at x% then jump to 100%
     - AllAtOnce: immediate
   - Aliases get their own ARN
+
+# ELB
+
+## ELB Types
+
+- Classic Load Balancer (v1)
+  - HTTP(S), TCP
+- Application Load Balancer (v2)
+  - HTTP(S), WebSocket
+- Network Load Balancer (v2)
+  - TCP(TLS), UDP
+- AWS recommends v2 as they provide more features
+- ELB can be internal (with a private IP) or external (with a public IP)
+
+## Classic Load Balancers
+
+- CLB Listener can be 
+  - HTTP(s) (Layer 7)
+  - TCP(TLS) (Layer 4)
+  - Internal traffic must be at the same layer
+- CLB supports only one SSL certificate
+  - You must edit SAN (Subject Alternate Name) in SSL certificate to support multiple host names
+  - Also, you can use multiple CLBs or use ALB with SNI (Server Name Indication)
+
+## Application Load Balancers
+
+- ALB is layer 7
+- ALB can balance traffic to
+  - Target groups
+    - EC2 instances
+    - ECS tasks
+    - Lambda functions
+    - Private IP address
+  - Multiple applications using Dynamic Port Mapping
+- Support redirects from HTTP to HTTPS
+- ALB supports routing HTTP requests based on URL
+- ALB supports SNI
+
+## Network Load Balancers
+
+- NLB is layer 4
+- NLB has a static public IP per AZ and supports assigning Elastic IP
+- NLB has less latency ~100 ms (~400 ms for ALB)
+- NLB target groups
+  - EC2 instances
+  - ECS tasks
+  - Private IP addresses
+- Proxy Protocol
+  - NLB can append a proxy protocol header to the TCP data
+  - So you can send additional connection information such as the source and destination
+
+## Cross-zone Load Balancing
+
+- CLB
+  - Disable by default
+  - No charges
+- ALB
+  - Always enabled
+  - No charges
+- NLB
+  - Disable by default
+  - Charged for cross-AZ data transfer if enabled
+
+## Load Balancing Stickiness
+
+- CLB & ALB support stickiness
+- The same client is always redirected to the same instance
+- Stickiness may cause imbalance
+- Alternative is to cache session data in ElastiCache or DynamoDB
+
+# API Gateway
+
+- Helps expose Lambda, HTTP, AWS Services as REST APIs
+- Limits
+  - 29 seconds timeout
+  - 10 MB max payload size
+
+## Deployment Stages
+
+- You can create many stages of API Gateway, and name them as you want
+  - such as dev, test, prod
+- Stages can be rolled back
+
+## Architecture: API Gateway in front of S3
+
+- API Gateway has 10 MB payload size limit, so proxy S3 through API Gateway is not perfect
+- Use API Gateway to invoke a Lambda function to generate a pre-signed URL from S3, and send the URL back to the client
+
+## Endpoint Types
+
+- Edge-Optimized (default)
+  - Requests are routed through the CloudFront Edge locations
+  - The API Gateway still lives in one region
+- Regional
+  - Lower latency if client is in the same region
+  - Can manually combine with CloudFront
+- Private
+  - Can only be accessed from the VPC using VPC Endpoints
+  - Need use resource-based policies to define access
+
+## Gateway Cache
+
+- Helps to reduce calls made to the backend
+- Default TTL is 300 seconds (up to 3600s)
+- Caches are defined per Stage
+- You can overwrite cache settings of each methods
+- Clients can control the cache TTL with header *Cache-Control: max-age=xxx*
+  - Need proper IAM role
+- You can flush the cache immediately
+- You can encrypt cache optionally
+- Cache capacity is between 521 MB to 237 GB
+
+## API Gateway HTTP Error Codes
+
+- 4xx
+- 5xx
+  - 29 seconds timeout will cause 504
+
+## API Gateway Security
+
+- API Gateway can load certificates
+- Resource-based policy
+- IAM roles at the API level
+- CORS
+  - Control which domains can call your API
+
+## API Gateway Authentication
+
+- IAM based access
+  - Good for providing access within your own network
+  - Pass IAM credentials in headers through Sig V4
+- Custom Authorizer (normally use Lambda)
+  - OAuth, SAML, ect.
+- Cognito User Pools
+  - Client authenticates with Cognito
+
+## API Gateway Logging & Monitoring
+
+- CloudWatch Logs
+  - Enable CloudWatch logging at the Stage level
+  - Can send custom logs
+  - Can send logs directly into Kinesis Data Firehose
+- CloudWatch Metric
+  - Metrics are by stage
+    - Latency and Cache Hits
+  - Can enable detailed metrics
+- X-Ray
+  - Tracing requests to get extra information
+  - You can get the full picture if you integrate API Gateway with Lambda
