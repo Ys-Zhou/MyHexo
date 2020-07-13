@@ -390,3 +390,99 @@ tags: 'AWS - Solutions Architect'
 - X-Ray
   - Tracing requests to get extra information
   - You can get the full picture if you integrate API Gateway with Lambda
+
+# Route 53
+
+## Route 53 Records
+
+- Types
+  - A: hostname to IPv4
+  - AAAA: hostname to IPv6
+  - CNAME: hostname to hostname
+  - Alias: hostname to AWS resource
+    - Can also be used for root apex record (omit www)
+- Records has TTL
+
+## Routing Policy
+
+### Simple Routing Policy
+
+- Maps a hostname to a single resource
+- No health check
+- Can return multiple resources, but client will choose one randomly
+  - Called Multi-value Routing Policy
+
+### Weight Routing Policy
+
+- Maps a hostname to multiple resources with weight
+- Can do load balancing
+- Can associate with health checks
+
+### Failover Routing Policy
+
+- If primary resource fails in health check, Route 53 will failover to the secondary one
+
+### Latency Routing Policy
+
+- Redirect to the resource that has the least latency close to the client
+- Has a failover capability if enable health checks
+
+### Geo Location Routing Policy
+
+- Routing based on user location
+  - Different from Latency Routing Policy
+- Should create a default policy in case of no matching
+
+### Nested Records
+
+- Use Alias Records (to a Route 53 record) to nest Routing policies
+
+## Private DNS
+
+- Can use Route 53 as internal private DNS in VPC(s)
+- Must enable the VPC settings *enableDnsHostNames* and *enableDnsSupport*
+- The VPC(s) called Private Hosted Zone
+
+## Route 53 DNSSEC
+
+- Route 53 supports DNSSEC for domain registration
+- Route 53 dose not provide DENSEC service
+  - You need another DNS provider or custom DNS server on EC2
+
+## Route 53 Health Checks
+
+- Health Check Targets
+  - End points
+  - CloudWatch Alarms
+  - Other Health Checks (calculated Health Check)
+- Health Check Metrics
+  - Response (only 2xx and 3xx can pass health checks)
+  - Response body (first 5120 bytes)
+  - Other Health Checks results
+- Health Checks can trigger CloudWatch Alarms
+
+## Architecture: Health Check with Private Subnet
+
+- Health Checks cannot access private end points
+- Solution: 
+  - Create a CloudWatch Metric for the private end point
+  - Create a CloudWatch Alarm associated with the metric
+  - Create a Health Check checks the alarm
+
+## Architecture: RDS Multi-region Failover
+
+- A RDS DB with a RDS Read Replica in another region
+- Solution:
+  - Create a CloudWatch Alarm for the main DB
+  - Create a Health Check checks the alarm
+  - Trigger a CloudWatch Alarm if check fails
+  - Then trigger a CloudWatch Event or SNS topic
+  - Then trigger a Lambda function
+    - Update Route 53 DNS records
+    - Promote Read Replica to be the main DB
+
+## Architecture: Add a VPC to Private Hosted Zone
+
+- Set VPC peering between the new VPC and central VPC
+- Associate the new VPC
+  - If the VPCs are in different accounts, association can only be done through CLI
