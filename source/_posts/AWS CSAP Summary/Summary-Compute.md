@@ -202,6 +202,7 @@ tags: 'AWS - Solutions Architect'
   - Results is returned right away
   - Client need handle the errors
 - Asynchronous Invocations
+  - Will be used when triggered by S3 Events, SNS, CloudWatch Events
   - Lambda attempts to retry on errors (up to 3 times)
   - Make sure the processing is idempotent
   - Can define a DLQ (to SNS or SQS) for failed processing
