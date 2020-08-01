@@ -74,3 +74,50 @@ tags: 'AWS - Solutions Architect'
 - From On-Premise
   - Direct Connect
   - VPN
+
+# S3
+
+## S3 Replication
+
+- Cross-Region Replication & Same Region Replication
+- Combine with Lifecycle Policies
+- S3 bucket versioning must be enabled
+
+## S3 Events
+
+- Send events to SNS, SQS, Lambda when objects changed
+- Events typically will be delivered in secondes, but sometimes takes minutes
+- If two writes are made to a non-versioning object, it is possible that only one event will be sent
+  - Enable versioning if you want to send every time
+
+## S3 CloudWatch Events
+
+- By default, CloudTrail records bucket-level API calls
+- You can enable CloudTrail logs for object-level API calls
+- CloudTrail can trigger CloudWatch events
+
+## S3 Performance
+
+- 100 - 200 ms latency
+- 3500 PUT/COPY/POST/DELETE and 5500 GET/HEAD requests per second per prefix
+  - Spread prefix to reach higher requests per second
+
+### S3 Multi-Part Upload
+
+- Recommended for files > 100 MB, must be used for files > 5 GB
+- Speed up transfers
+
+### S3 Transfer Acceleration
+
+- Increase transfer speed by uploading files to an AWS edge location, and then forward the data to S3 buckets
+- Compatible with Multi-Part Upload
+
+### Byte-Range Fetches
+
+- Parallelize GETs by requesting specific byte ranges
+- Can be used to retrieve only partial data
+
+### S3 & Glacier Select
+
+- Retrieve less data using SQL by performing server side filtering
+- Filter by rows or columns
