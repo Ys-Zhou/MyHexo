@@ -1,7 +1,7 @@
 ---
 title: 'Summary: Storage'
 date: 2020-07-31 15:33:26
-tags: 'AWS - Solutions Architect'
+tags: 'AWS - Solutions Architect (Summary)'
 ---
 
 # EBS & EC2 Instance Store

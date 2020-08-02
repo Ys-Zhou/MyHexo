@@ -1,7 +1,7 @@
 ---
 title: 'Summary: Caching'
 date: 2020-08-02 10:37:49
-tags: 'AWS - Solutions Architect'
+tags: 'AWS - Solutions Architect (Summary)'
 ---
 
 # CloudFront

@@ -1,7 +1,7 @@
 ---
 title: 'Summary: Security'
 date: 2020-05-29 15:19:28
-tags: 'AWS - Solutions Architect'
+tags: 'AWS - Solutions Architect (Summary)'
 ---
 
 # CloudTrail

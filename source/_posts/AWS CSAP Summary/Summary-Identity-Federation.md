@@ -1,7 +1,7 @@
 ---
 title: 'Summary: Identity & Federation'
 date: 2020-05-23 22:43:39
-tags: 'AWS - Solutions Architect'
+tags: 'AWS - Solutions Architect (Summary)'
 ---
 
 # IAM

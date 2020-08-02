@@ -59,7 +59,7 @@ tags: AWS - Big Data
 
 ## ES Features
 - Full-managed but not serverless, ES runs based on EC2
-  - Can scale up or down without downtime but should it manually
+  - Can scale up or down without downtime but should do it manually
 - Network isolation (VPC)
   - Can use all the features of VPC
 - AWS integration
