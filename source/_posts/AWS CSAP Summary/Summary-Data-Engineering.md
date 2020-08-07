@@ -74,3 +74,59 @@ tags: 'AWS - Solutions Architect (Summary)'
   - Streaming ETL
   - Continuous metric generation
   - Responsive analytics
+
+# AWS Batch
+
+- Run batch jobs as Docker images
+- Serverless
+  - Batch -> ECS -> EC2 in VPC
+    - Make sure that EC2 instances have access to ECS
+    - If EC2 instances are in private subnet, ether use a NAT gateway / instances or use VPC endpoints for ECS 
+  - Batch is free, you just pay for underlying EC2 instances
+- Integration
+  - Schedule Batch jobs using CloudWatch Events
+  - Orchestrate Batch jobs using Step Function
+
+## Batch Compute Environments
+
+- Managed Compute Environment
+  - Batch manage the capacity and instance types
+  - You can choose On-Demand or Spot instances
+    - You can set a maximum price for spot instances
+- Unmanaged Compute Environment
+  - You control and manage instance configuration, provisioning, scaling
+
+## Batch Multi-Node Mode
+
+- Leverage multiple EC2 instances
+- One main node, multiple child nodes
+- Cannot use Spot instances
+- Have better performance if EC2 instances lunch in a placement group
+
+# EMR
+
+- AWS managed Hadoop clusters
+- EMR takes care of provisioning and configuration of EC2
+- Auto-scaling with CloudWatch
+
+## EMR Storage
+
+- HDFS
+  - EBS
+  - Temporary
+  - Single AZ (because a cluster is in a single AZ)
+- EMRFS
+  - S3
+  - Permanent
+  - Multi-AZ
+- Hive can read from DynamoDB
+
+## EMR Node Types
+
+- Master Node: manage cluster
+- Core Node: run tasks and store data
+- Task node: only run tasks
+- Any type of node can use a configuration of EC2
+  - On-demand instances
+  - Reserved instances
+  - Spot instances

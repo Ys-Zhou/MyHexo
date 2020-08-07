@@ -34,7 +34,7 @@ tags: 'AWS - Solutions Architect (Summary)'
 ## DynamoDB Streams
 
 - React to changes in DynamoDB tables in real time
-- Can be read by Lambda, EC2, ect.
+- Can be read by Lambda, EC2, etc.
 - 24 hors retention of data in stream
 
 ## DynamoDB Global Tables

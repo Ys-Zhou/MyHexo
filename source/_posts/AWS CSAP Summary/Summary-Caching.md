@@ -13,7 +13,7 @@ tags: 'AWS - Solutions Architect (Summary)'
   - If you define OAI, only CloudFront can access the S3 buckets
   - Traffics between Edge Locations and S3 buckets go over private network
 - Custom origin
-  - ALB, EC2, ect.
+  - ALB, EC2, etc.
   - Traffics between Edge Locations and backends go over public Internet
   - Your backends must be public
 - Support primary-secondary origins

@@ -165,7 +165,7 @@ tags: 'AWS - Solutions Architect (Summary)'
 - A managed AD in your AWS VPC
 - Integrations
   - EC2 Windows Instance
-  - RDS for SQL Server, AWS Workspaces, Quicksight, ect.
+  - RDS for SQL Server, AWS Workspaces, Quicksight, etc.
   - AWS SSO to provide access to 3rd party applications
 - Can be joined to on-premise AD
   - AD two-way forest trust

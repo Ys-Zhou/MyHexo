@@ -71,7 +71,7 @@ tags: 'AWS - Solutions Architect (Summary)'
   - Redshift
   - RDS
   - SSM: Parameter Store
-  - ect.
+  - etc.
 - Encrypt your own data
   - KMS APIs (Encrypt / Decrypt)
 - CMK can never be retrieved bu user
@@ -91,7 +91,7 @@ tags: 'AWS - Solutions Architect (Summary)'
     - Old key will be preserved
   - Can add key policy
 - AWS Managed CMK
-  - Used by AWS services (aws/s3, aws/ebs, aws/redshift, ect.)
+  - Used by AWS services (aws/s3, aws/ebs, aws/redshift, etc.)
 
 # AWS Systems Manager (SSM) Parameter Store
 

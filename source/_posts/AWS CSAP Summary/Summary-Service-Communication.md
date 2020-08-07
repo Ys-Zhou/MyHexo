@@ -34,7 +34,7 @@ tags: 'AWS - Solutions Architect (Summary)'
 # SQS
 
 - Max message size is 256 KB, use S3 for large messages
-- Can be read from EC2, Lambda, ect.
+- Can be read from EC2, Lambda, etc.
 - SQS FIFO
   - 300 messages/s without batching
   - 3000 messages/s with batching

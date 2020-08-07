@@ -374,7 +374,7 @@ tags: 'AWS - Solutions Architect (Summary)'
   - Good for providing access within your own network
   - Pass IAM credentials in headers through Sig V4
 - Custom Authorizer (normally use Lambda)
-  - OAuth, SAML, ect.
+  - OAuth, SAML, etc.
 - Cognito User Pools
   - Client authenticates with Cognito
 
