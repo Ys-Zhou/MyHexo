@@ -1,7 +1,7 @@
 ---
-title: 'Summary: Service Communication'
+title: 'Services: Service Communication'
 date: 2020-08-03 22:03:05
-tags: 'AWS - Solutions Architect (Summary)'
+tags: 'AWS - Solutions Architect (Services)'
 ---
 
 # AWS Step Function

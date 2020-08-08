@@ -1,7 +1,7 @@
 ---
-title: 'Summary: Databases'
+title: 'Services: Databases'
 date: 2020-08-02 22:00:38
-tags: 'AWS - Solutions Architect (Summary)'
+tags: 'AWS - Solutions Architect (Services)'
 ---
 
 # DynamoDB

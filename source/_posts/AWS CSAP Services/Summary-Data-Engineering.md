@@ -1,7 +1,7 @@
 ---
-title: 'Summary: Data Engineering'
+title: 'Services: Data Engineering'
 date: 2020-08-04 12:17:00
-tags: 'AWS - Solutions Architect (Summary)'
+tags: 'AWS - Solutions Architect (Services)'
 ---
 
 # Kinesis
@@ -130,3 +130,50 @@ tags: 'AWS - Solutions Architect (Summary)'
   - On-demand instances
   - Reserved instances
   - Spot instances
+
+# Redshift
+
+- Data warehouse
+- Columnar storage
+- Not serverless, need provisioning instances
+- Run queries by SQL
+- Quicksight and Tableau integration
+- Load data from D3, Kinesis Firehose, DynamoDB, DMS, etc.
+- Enhanced VPC Routing: run COPY / UNLOAD commands through VPC
+
+## Redshift Nodes
+
+- Up to 128 nodes per cluster
+- Up to 160 GB per node
+- All nodes (cluster) are in a single AZ
+- Leader node: planning queries, aggregating results
+- Compute nodes: performing queries
+
+## Redshift Snapshots
+
+- Snapshots are stored internally in S3
+- Snapshots are incremental
+- Snapshots can be restored into a new cluster
+- Automated snapshots
+  - Every 8 hours or 5 GB
+  - Can set a schedule and retention
+- Manual snapshots
+  - Also need to be deleted manually
+- Can configure Redshift to automatically copy snapshots to another Region
+
+## Redshift Spectrum
+
+- Query data in S3 without loading it using Redshift
+- Must have a Redshift cluster to start queries
+- Queries will run in AWS managed Redshift Spectrum nodes
+
+# Athena
+
+- Queries data in S3 using SQL
+- Supports CSV, JSON, Parquet, ORC
+- Queries are logged in CloudTrail
+
+# Quicksight
+
+- BI tool for data visualization, creating dashboards
+- Integrates with Athena, Redshift, EMR, RDS

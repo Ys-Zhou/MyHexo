@@ -1,7 +1,7 @@
 ---
-title: 'Summary: Compute'
+title: 'Services: Compute'
 date: 2020-07-08 00:09:23
-tags: 'AWS - Solutions Architect (Summary)'
+tags: 'AWS - Solutions Architect (Services)'
 ---
 
 # EC2
