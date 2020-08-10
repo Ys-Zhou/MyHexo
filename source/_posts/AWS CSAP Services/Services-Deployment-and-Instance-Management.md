@@ -133,3 +133,89 @@ tags: 'AWS - Solutions Architect (Services)'
   - Deploy a CloudFormation stack across multiple accounts and regions
 - Stack Policies
   - Prevent accidental updates or deletes to stack resources
+
+# Service Catalog
+
+- Admin user can create many Portfolios in Service Catalog
+  - Portfolio is a collection of CloudFormation templates
+- Admin user can assign IAM Permissions to access Portfolios to users
+- Users can use CloudFormation templates in Portfolios to create resources
+- Service Catalog helps with 
+  - governance, compliance, consistency
+  - using AWS services without requiring deep AWS knowledge
+
+# Serverless Application Model (SAM)
+
+- SAM is a framework for deploying serverless applications
+- Configuration in SAM is YAML code
+  - Lambda functions
+  - DynamoDB tables
+  - API Gateway
+  - Cognito User Pools
+- You can also use SAM to run Lambda, API Gateway, DynamoDB locally
+- SAM can use CodeDeploy to deploy Lambda functions with traffic shifting
+
+# Systems Manager (SSM)
+
+- Manage EC2 and on-premise systems at scale
+- Works for both Linux and Windows
+- Need install SSM Agent onto systems
+  - Install by default on Amazon Linux AMI and some Ubuntu AMI
+  - EC2 instances must have the proper IAM role to allow SSM actions
+- Integration
+  - CloudWatch metrics / dashboards
+  - AWS Config
+- Free
+
+## SSM Features
+
+- Insights
+  - Dashboard
+  - Inventory: audit the software installed
+  - Compliance
+- Parameter Store
+- Action
+  - Automation
+  - Run Command
+  - Session Manager
+  - Maintenance Windows
+  - State Manager
+
+## SSM Run Command
+
+- Execute script or command on multiple instances (using resource groups)
+- Can control the rate and error actions
+- Integrated with IAM and CloudTrail
+- Execute from SSM Agent (no need for SSH)
+
+## SSM Patch Manager
+
+- Patch Baselines
+  - Linux Default
+    - AWS-AmazonLinux2DefaultPatchBaseline
+    - AWS-CentOSDefaultPatchBaseline
+    - etc.
+  - Windows Default (patched are auto-approved 7 days after the release)
+    - AWS-DefaultPatchBaseline = AWS-WindowsPredefinedPatchBaseline-OS
+      - Critical updates & Security updates
+    - AWS-WindowsPredefinedPatchBaseline-Applications
+      - Also includes Microsoft application updates
+  - You can define custom patch baselines as well
+- Config Patch
+  1. Define a patch baseline to use
+  2. Define patch groups
+  3. Define Maintenance Windows (schedule, duration, patch groups, tasks)
+  4. Add *AWS-RunPatchBaseline* Run Command as a registered task to the Maintenance Window
+  5. Define Rate Control (concurrency & error threshold) for the task
+  6. Monitor patch compliance using SSM Inventory
+
+## SSM Parameter Store
+
+- Secure storage for configuration and secrets
+- Option encryption using KMS
+- Versioning
+- Notification using CloudWatch Events
+- Integration with CloudFormation
+- Secrets are stored in path hierarchically
+- Can refer secrets from Secrets Manager
+- Can retrieve latest AMI ID
