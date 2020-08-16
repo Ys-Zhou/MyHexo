@@ -1,7 +1,7 @@
 ---
 title: 'Services: Cost Control'
 date: 2020-08-16 16:39:58
-tags:
+tags: 'AWS - Solutions Architect (Services)'
 ---
 
 # Cost Allocation Tags
