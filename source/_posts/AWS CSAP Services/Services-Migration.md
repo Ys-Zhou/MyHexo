@@ -101,3 +101,67 @@ tags: 'AWS - Solutions Architect (Services)'
 
 - Transfer 1000 PB of data
 - Better than Snowball if you transfer more than 10 PB
+
+# Database Migration Service (DMS)
+
+- Migrate databases to AWS
+- You must create a EC2 instance to run DMS
+- Support heterogeneous migrations
+- Support continuous data replication using CDC
+- Works over VPC Peering, VPN, Direct Connect
+
+## DMS Sources & Targets
+
+- Sources
+  - SQL Databases in on-premise or EC2 instances
+  - RDS
+  - S3
+- Targets
+  - SQL Databases in on-premise or EC2 instances
+  - RDS
+  - S3
+  - Redshift
+  - DynamoDB
+  - ElasticSearch
+  - Kinesis Data Streams
+  - DocumentDB
+
+## Schema Conversion Tool (SCT)
+
+- Convert a database's schema from one engine to another
+- Support OLTP and OLAP databases
+
+## DMS with Oracle
+
+- Support TDE for both source and target
+- Support BLOBs in tables that have a primary key
+
+## DMS + Snowball
+
+1. Extract data into Snowball devices, use SCT if needed
+2. After AWS receives the devices, data will be loads into S3 buckets
+3. Use DMS to migrate the data from S3 to any target
+4. Use CDC to migrate new data coming in shipment if needed
+
+# Application Discovery Services
+
+- Gathering information about on-premises data centers
+- Agentless discovery 
+  - Use Application Discovery Agentless Connector deployed to VM host
+  - Gather: VM inventory, configuration, performance
+  - Works on any OS
+- Agent-based discovery
+  - Use Application Discovery Agent
+  - Gather: configuration, performance, running processes, network connections between systems
+  - Support Microsoft Server and Linux
+- Results can be exported as CSV or viewed within AWS Migration Hub
+
+# Server Migration Services (SMS)
+
+- Migrate entire VMs to AWS
+- Rehosting
+- SMS is an improvement over old VM Import/Export Service
+- Works with vSphere, Hyper-V, Azure VM
+- Every replication creates a EBS snapshot / AMI ready for deployment on EC2
+- Replication is incremental
+- You can create replication one time or every interval
