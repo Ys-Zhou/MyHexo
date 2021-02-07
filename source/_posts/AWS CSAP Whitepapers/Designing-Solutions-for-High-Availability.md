@@ -1,7 +1,7 @@
 ---
-title: Designing Solutions for High Availability
+title: 'Designing Solutions for High Availability'
 date: 2019-12-04 08:52:00
-tags: AWS - Solutions Architect
+tags: 'AWS - Solutions Architect (Whitepapers)'
 ---
 
 # Building Fault Tolerance Applications

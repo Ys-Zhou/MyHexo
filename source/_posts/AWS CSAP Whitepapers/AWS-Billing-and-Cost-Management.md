@@ -1,7 +1,7 @@
 ---
-title: AWS Billing and Cost Management
+title: 'AWS Billing and Cost Management'
 date: 2019-12-17 09:12:00
-tags: AWS - Solutions Architect
+tags: 'AWS - Solutions Architect (Whitepapers)'
 ---
 
 # AWS Organizations
