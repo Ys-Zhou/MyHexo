@@ -293,3 +293,21 @@ tags: 'AWS - Solutions Architect (Whitepapers)'
   - You can also manage the keys using AWS KMS CMK
   - Encryption is enabled at the log group level
   - You can also encrypt logs when you create the log group or after it exists
+
+### CloudWatch Logs Insights
+
+- Insights provides the interactive search and analysis of the log data in CloudWatch Logs
+- Insights includes a query language
+- Insights automatically discovers fields in logs from AWS services and any JSON logs
+- A single request can query up to 20 log groups
+
+### Exporting data to S3
+
+- You can export data from CloudWatch Logs to S3 directly
+- Logs from multiple log groups can be exported to the same S3 bucket
+  - Use prefix to identify them
+- Log data take up to 12 hours to become available for export
+- Not for real-time analysis. If you need near real-time analysis:
+  - Using CloudWatch Logs Insights
+  - Using subscriptions of CloudWatch Logs (Ex. streaming log data to ElasticSearch)
+
