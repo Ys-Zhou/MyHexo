@@ -311,3 +311,47 @@ tags: 'AWS - Solutions Architect (Whitepapers)'
   - Using CloudWatch Logs Insights
   - Using subscriptions of CloudWatch Logs (Ex. streaming log data to ElasticSearch)
 
+### CloudWatch Agent
+
+- Collect log from EC2 instances or on-premises servers into CloudWatch Logs
+  - Unified CloudWatch Agent
+  - CloudWatch Logs Agent (old)
+- The advantages of Unified Agent over old Logs Agent
+  - Can collect both logs and metrics
+  - More metrics
+  - Better performance
+  - Can collect logs from Windows Server
+
+### Real-time Processing with Subscriptions
+
+- Create a CloudWatch Logs Subscription Filter on a Log Group can real-time send data to
+  - Lambda
+  - Kinesis Firehose
+  - Kinesis Streams
+- CloudWatch Logs produces CloudWatch metrics about the forwarding of log events to subscription
+
+### Cross-Account Log Sharing with Subscription
+
+- Only support Kinesis Streams
+- Procedure
+  - Create a Kinesis Streams on the target account
+  - Create an IAM role with permissions to access Kinesis Streams
+  - Assume the IAM role to CloudWatch in the source account
+  - Create a subscription to send logs to Kinesis Streams
+
+## CloudWatch Events
+
+- Rules
+  - A rule matches incoming events and routes them to targets for processing
+  - You can set multiple targets in a rule
+  - Rules are not processed in a particular order
+  - You can custom the Events (in JSON) sent to the targets
+- Event Source
+  - Event Pattern
+    - CloudWatch, etc.
+    - Can be from another account
+  - Schedule
+    - Fixed rate
+    - Cron
+- Targets
+  - Lambda Function, etc.
