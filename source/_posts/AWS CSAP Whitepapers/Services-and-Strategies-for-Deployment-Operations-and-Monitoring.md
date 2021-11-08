@@ -355,3 +355,40 @@ tags: 'AWS - Solutions Architect (Whitepapers)'
     - Cron
 - Targets
   - Lambda Function, etc.
+
+## CloudWatch Synthetics
+
+- CloudWatch Synthetics is a fully-managed service that you can create canaries to test endpoints
+- Canaries
+  - Scripts that follow the same routes and perform the same actions as a customer
+  - Canaries check the availability and latency of the endpoints, store the load time and screenshots
+  - Can run once, or on a schedule
+- You can create CloudWatch alarms based on canaries testing
+
+## CloudWatch ServiceLens
+
+- ServiceLens is a integration of CloudWatch and X-Ray to provide an end-to-end view of the application to help investigating problems and their effect on the application
+- ServiceLens uses service map to display the resources as nodes, and highlights the traffic, latency, and errors for each node and its connections
+- You can check each node to see insights about the metrics, logs, and traces associated with that part of the service
+- Supports
+  - Lambda functions
+  - API Gateway
+  - Java-based applications running on EC2, ECS on Kubernetes, on-premises Kubernetes with Container Insights deployed
+- Integrates with CloudWatch Synthetics
+
+# EventBridge
+
+- Serverless event bus service
+- Useful to build event-driven architectures that are loosely coupled and distributed
+- Based on CloudWatch Events but allows that event sources to be SaaS providers and customer's own applications
+- Delivers events in near real-time
+- Can use routing rules to filter events
+- Integrated with a large number of sources and targets
+
+## EventBridge vs. SNS
+
+- EventBridge
+  - Building an application that reacts to events from AWS services or SaaS application
+- SNS
+  - Nearly unlimited throughput and low latency
+  - Pub-sub architecture
