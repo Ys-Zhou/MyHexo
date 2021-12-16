@@ -392,3 +392,120 @@ tags: 'AWS - Solutions Architect (Whitepapers)'
 - SNS
   - Nearly unlimited throughput and low latency
   - Pub-sub architecture
+
+# AWS Config
+
+- AWS Config provides a detailed view of the configuration of AWS resources in an AWS account
+- It can
+  - Evaluate your AWS resource configurations
+  - Get a snapshot of the current configurations
+  - Retrieve current and historical configurations
+  - Receive a notification whenever a resource is changed
+  - View relationship between resources
+- Use Cases
+  - Resource administration, auditing, and compliance
+  - Managing and troubleshooting configuration changes
+  - Security analysis
+
+## AWS Config Concepts
+
+- Items
+  - A point-in-time view of the configuration of a AWS resource
+  - Include: metadata, attributes, relationships, related events
+  - AWS Config creates an item whenever it detects a change to a resource type that it is recording
+- History
+  - A collection of the items for a given resource
+  - AWS Config automatically delivers a history file for each resource type to S3
+  - AWS Config retains Items for a period (30 days to 7 years)
+- Recorder
+  - It records the configurations of the resources as items
+  - By default, it records all supported resources in the region where AWS Config is running
+- Snapshot
+  - A collection of the items for a given time
+  - You can use a snapshot to validate your configuration
+  - Snapshots can be delivered to an S3 bucket
+- Stream
+  - A stream of all items
+  - Every time a resource is changed, an item will be added to the stream
+  - Stream is based on SNS Topic, so you can get notifications from the stream
+- Resource Relationship
+  - AWS Config creates a map of relationships between AWS resources
+
+## Delivering Configuration Items
+
+- To S3 buckets
+  - AWS Config can regularly send items to S3 buckets every 6 hours
+  - Each file includes items of one resource type
+  - AWS Config will not send file if no configuration change
+- To SNS topic
+  - You can farther send message to SQS to trigger a Lambda function
+
+## IAM for AWS Config
+
+- Users configuring AWS Config need IAM permissions of AWS Config, S3, SNS, etc.
+- AWS Config need IAM roles to access S3 buckets, SNS topics, and AWS resources
+
+## Multi-Account Multi-Region Aggregation
+
+- Need a source account in a source region
+- Aggregator
+  - A new resource type in AWS Config that collects AWS Config configuration and compliance data from multiple source accounts and regions
+  - Need to be created in the region where the aggregated data need to be collected
+- Aggregator need permissions to collect data from source accounts
+  - Not need permissions if accounts are in the same organization
+
+## Query
+
+- AWS Config has a query feature to obtain current resource stat metadata
+- Use cases
+  - Inventory management
+  - Security and operational intelligence
+  - Cost optimization
+
+## Monitoring
+
+- SNS (to SQS)
+- CloudTrail
+- CloudWatch Events
+
+# Service Catalog
+
+- Region specific service
+  - End users can only launch products in the specific region
+- Service Catalog API can be privately accessed from a VPC bu creating VPC Endpoints
+
+## Products
+
+- A product is a CloudFormation template that can comprise one or more AWS resources
+- Administrators distribute products to end users in portfolios. End users who have right to use portfolios can launch the products
+- Administrators can distribute many versions of a product, and users can launch a product by choosing a version
+
+## Portfolios
+
+- A portfolios is a collection of products, with configuration information that determines who can use those products and how they can use
+- Administrators can create a customized portfolio for each type of user in an organization and grant access to the appropriate portfolio
+
+## Portfolio Sharing
+
+- A portfolio can be shared to other accounts
+- You can use shared portfolios to launch products, but you can not modify these portfolios
+- You can add additional constraints to the shared portfolios
+- Owner can stop the sharing, but cannot modify the launched products
+
+## Permissions
+
+- Use IAM permissions to control who can view an modify a catalog
+- Portfolio-level permission controls who can browse the portfolio and launch the products in it
+- You need assigned a IAM role to products, Service Catalog will use the role to create resources for products
+- You can also use the role to control the permissions to the underlying resources
+
+## Constraints
+
+- Constraints can be applied to products or the portfolios
+- The most restrictive constraint will be use
+- Launch constraints
+  - Specific a role for a product, and use the role to control the launch permissions
+- Template constraints
+  - Constraints parameters that user can use in CloudFormation templates
+- Notification constraints
+  - Enable you to get notifications about stack events using a SNS topic
