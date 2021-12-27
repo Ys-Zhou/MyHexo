@@ -509,3 +509,122 @@ tags: 'AWS - Solutions Architect (Whitepapers)'
   - Constraints parameters that user can use in CloudFormation templates
 - Notification constraints
   - Enable you to get notifications about stack events using a SNS topic
+
+# System Manager (SSM)
+
+- SSM is a collection of capabilities to configure and manage EC2 and on-premises instances
+- SSM includes a unified interface that allows to easily centralize operational data and automate tasks across instances
+- SSM can be used with Windows, Linux, or RaspBian instances
+
+## Configuration
+
+- Install SSM agents on the instances
+  - For newer OS versions, SSM agent is installed by default
+- Make sure your instances can access to public Internet
+- Configure permissions
+  - IAM User permissions for who use SSM
+  - IAM Roles for EC2 instances
+  - IAM Service Roles for on-premises instances
+
+## Resource Groups
+
+- A resource group is a collection of resources
+  - In SSM, it's EC2 instances and on-premises instances
+- Resources in a resource group are all in a same Region
+- SSM provides many insights for a group
+  - CloudTrail logs
+  - Evaluations against AWS Config rules
+  - Trusted Advisor reports
+
+## SSM Inventory Manager
+
+- Inventory is used to collect metadata from your managed instances
+- You must create at least one inventory per region per account
+- Using SSM Resource Data Sync to output inventory data into a S3 bucket
+  - Can be performed cross-region & cross-account
+- Inventory stores data for 30 days
+
+## SSM Configuration Compliance
+
+- You can use SSM Configuration Compliance to scan your managed instances for compliance and inconsistencies
+  - View compliance history and change tracking by using AWS Config
+  - Remediate issues by using SSM Run Command, State Manager, CloudWatch Events
+  - Port data to S3 (and further use Athena or QuickSight to generate reports)
+
+## Automation
+
+- SSM Automation simplifies maintenance and deployment tasks
+- SSM Automation enables
+  - Build Automation workflows to configure and manage instances
+  - Receive notification about Automation by using CloudWatch Events
+  - Monitor Automation progress
+- Use cases
+  - Create and update AMIs
+  - Apply OS patches or application updates
+  - Update configuration
+
+## Run Command
+
+- SSM Run Command is used to perform administrative tasks and configuration changes at scale
+- Use cases
+  - Install or update applications
+  - Run scripts
+  - Build a deployment pipeline
+  - Capture log files
+  - Join Windows instances to a Windows domain
+- You can optionally send the command output to a S3 bucket or CloudWatch logs (need IAM permissions)
+- You can trigger a command as a CloudWatch event target action
+
+## State Manager
+
+- SSM State Manager is used to keeping your instances in a state that you define
+  - Instances are configured with specific applications
+  - Update drivers and AWS packages (ex. SSM Agent)
+  - Ensure the specific ports are closed or opened
+- State Manager association
+  - An association is a configuration that defines the states
+- Use cases
+  - Ensure application and network configurations
+  - Launch applications at start-up
+  - Update drivers and AWS packages including SSM Agent
+  - Join Windows instances to a Windows domain (same as RUN Command)
+  - Patch instances with software updates through their lifecycle
+  - Run scripts through their lifecycle or in schedule
+
+## Session Manager
+
+- SSM Session Manager is used to manage your instances through an interactive browser-based shell or through the AWS CLI
+
+## Patch Manager
+
+- SSM Patch Manager is used to manage and update OS security related patches
+  - For Windows instance, OS Security patching only
+  - For Linux instance, any packets
+- Patching can be automated on a regular basis by scheduling patching to run as a System Manager Maintenance Window task
+
+## Distributor
+
+- SSM Distributor is used to create software packages
+- You can use Run command or State Manager to deploy the packages or use State Manager to schedule the packages for automatic deployment
+
+## Maintenance Window
+
+- SSM Maintenance Window is used to set up recurring schedules to execute administrative tasks like installing patches and updates without interrupting business-critical operations
+
+## Parameter Store
+
+- SSM Parameter Store provides a serverless, secure, hierarchical storage for configuration and secrets management
+- You can store values as plain text or encrypted data using KMS
+- You can use Parameter Store to reference secrets in AWS Secrets Manager
+
+# Trusted Advisor
+
+- Trusted Advisor is a tool that provides real-time guidance to help provision AWS resources according to AWS best practices
+- Trusted Advisor provides recommendation on
+  - Cost
+  - Performance
+  - Security
+  - Fault Tolerance
+  - Service Limits
+- Trusted Advisor can aggregate reports on organization
+- You can use CloudWatch to monitor Trusted Advisor, and create CloudWatch alarms based on Trusted Advisor metrics
