@@ -81,6 +81,7 @@ tags: 'AWS - Solutions Architect (Services)'
 
 - **AssumeRole**: access a role within your account or cross-account
 - **AssumeRoleWithSAML**: return credentials for users logged with SAML
+  - AWS recommends using AWS SSO instead
 - **AssumeRoleWithWebIdentity**: return credentials for users logged with an Idp
   - AWS recommends using Cognito instead
 - **GetSessionToken**: for MFA, obtain user credentials
