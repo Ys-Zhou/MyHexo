@@ -12,8 +12,8 @@ tags: 'AWS - Solutions Architect (Services)'
   - General Purpose SSD
   - 3 IOPS / GB 
     - min 100 IOPS
-    - burst to 3000 IOPS
     - max 16000 IOPS
+    - can burst to 3000 IOPS if the volume IOPS < 3000 (storage < 1 TB)
   - 1 GB - 16 TB
 - io1
   - IOPS Optimized SSD
@@ -29,6 +29,11 @@ tags: 'AWS - Solutions Architect (Services)'
   - Cold HDD
   - 250 MB / s
   - 250 GB - 16 TB
+
+## RAID Configurations
+
+- RAID 0
+- RAID 1
 
 ## EBS Snapshots
 
