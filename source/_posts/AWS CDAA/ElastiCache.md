@@ -239,3 +239,41 @@ tags: 'AWS - Developer'
 - A visual tool to create complex route policies
 - Use this tool to create Geoproximity Policy
   - Set bias
+
+# AWS CLI & SDK
+
+- Simulate API calls
+  - Use Policy Simulator
+  - Run CLI commends with `--dry-run`
+- Decode authorization message when your API call failed
+  - Run `sts decode-authorization-message` in CLI
+- EC2 instance metadata
+  - Request `http://169.254.169.254/latest/meta-data`
+  - Ex. IAM Role name (cannot retrieve IAM Policies)
+  - Ex. IAM security credentials
+- CLI & SDK with MFA
+  - Call `STS GetSessionToken` API
+- SDK
+  - CLI uses the Python SDK (boto3)
+  - Default region is `us-east-1` if you do not specify one
+- Exponential Backoff
+  - Implement Exponential Backoff in your API calls to retry 5xx http errors
+  - Better than Linear Backoff
+  - SDK has already implemented this
+- Credentials Provider Chain
+  - CLI
+    - Command line options
+    - Environment variables
+    - Credentials file (~/.aws/credentials)
+    - Configuration file (~/.aws/config)
+    - Container credentials (for ECS tasks)
+    - Instance profile credentials (for EC2 instances)
+  - SDK
+    - Java JVM properties
+    - Environment variables
+    - The default credentials profile (in ~/.aws/credentials)
+    - Container credentials (for ECS tasks)
+    - Instance profile credentials (for EC2 instances)
+- Signature v4 Signing
+  - AWS use SigV4 to sign your credentials in your API calls
+  - In header option or http query parameters
