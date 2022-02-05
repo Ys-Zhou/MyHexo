@@ -1,5 +1,5 @@
 ---
-title: 'Something New & Important'
+title: 'Additional Contents'
 date: 2022-01-29 23:37:30
 tags: 'AWS - Developer'
 ---
@@ -277,3 +277,41 @@ tags: 'AWS - Developer'
 - Signature v4 Signing
   - AWS use SigV4 to sign your credentials in your API calls
   - In header option or http query parameters
+
+# S3
+
+## MFA Delete
+
+- You must enable Versioning on S3 bucket before enabling MFA-Delete
+- MFA-Delete can only be enabled / disabled / used through CLI
+- Only bucket owner can enable / disable MFA-Delete
+- MFA-Delete will be applied to
+  - Permanently delete an object version
+  - Suspend versioning on the bucket
+- MFA-Delete will not be applied to
+  - Mark an object deleted
+  - Enable versioning
+  - List object including deleted versions
+
+## Force Encryption
+
+- Use Bucket Policy
+  - Deny upload action when the object is unencrypted
+- Default Encryption
+  - It will be encrypted by default when you upload an unencrypted object
+
+## Access Logs (Server Access Logging)
+
+- Any request made to the S3 bucket will be logged into another S3 bucket
+- Do not enable Server Access Logging on a logging bucket (result in logging loop)
+- By enabling server access logging, your bucket ACL will be updated automatically to include access to the S3 log delivery group
+
+## Replication
+
+- Must enable versioning in both source and destination buckets
+- Can cross-account & cross-region
+- After activating, only new objects are replicated
+- Can optional set it to replicate delete markers
+- Deletions with a version ID are not replication
+- Replication is not chained
+  - The destination bucket will not replicate replicated objects to another bucket
