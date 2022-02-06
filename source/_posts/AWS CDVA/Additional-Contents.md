@@ -315,3 +315,178 @@ tags: 'AWS - Developer'
 - Deletions with a version ID are not replication
 - Replication is not chained
   - The destination bucket will not replicate replicated objects to another bucket
+
+## Pre-signed URLs
+
+- Can generate pre-signed URLs using SDK or CLI
+  - CLI or SDK for downloads
+  - Only SDK for uploads
+- Use `--expires-in` parameters to set expire time
+
+## Glacier Restore Time
+
+- Glacier
+  - Expedited - 1 ~ 5 minutes
+  - standard - 3 ~ 5 hours
+  - Bulk - 5 ~ 12 hours
+- Glacier Deep Archive
+  - Standard - 12 hours
+  - Bulk - 48 hours
+
+## Lifecycle Rules
+
+- Transition actions
+- Expiration actions
+  - Can be used to delete old versions
+  - Can be used to delete incomplete multi-part uploads
+- Rules can be created for
+  - a certain prefix
+  - certain object tags
+
+## Performance
+
+- 100 ~ 200 ms latency
+- 3500 PUT/COPY/POST/DELETE and 5500 GET/HEAD req/s per prefix
+- KMS limitation if you use SSE-KMS
+  - Call `GenerateDataKey` API when upload
+  - Call `Decrypt` API when download
+  - KMS has a quota 5500 or 10000 or 30000 req/s based on region
+  - You can request a quota increase
+
+# CloudFront
+
+## Geo Restriction
+
+- CloudFront can set geo restriction without using WAF
+  - You can use WAF as well but it is unnecessary
+
+## Caching
+
+- Cache based on
+  - Headers
+  - Session Cookies
+  - Query String Parameters
+- You can set TTL for a cache as well as invalidate it manually
+  - Call `CreateInvalidation` API
+- Maximize cache hits by separating static and dynamic distributions
+
+## Security
+
+- View Protocol Policy
+  - Redirect HTTP to HTTPS
+  - HTTPS only
+- Origin Protocol Policy
+  - HTTPS only
+  - Match Viewer (use the same protocol as viewer)
+- S3 Website dose not support HTTPS, so use CloudFront to force HTTPS will be an option
+
+## Signed URL / Cookie
+
+- Signed URL / Cookie policy includes
+  - Expiration
+  - User IP ranges
+  - Trusted signers (which AWS accounts can sign)
+- Create Signed URLs / Cookies
+  - Create a key pair
+  - Upload the public key to CloudFront
+  - Add the public key to a key group
+  - Use the private key in your application to create Signed URLs / Cookies
+
+## Price Classes
+
+- Price Class All: all regions - best performance
+- Price Class 200: excludes the most expensive regions
+- Price Class 100: only the least expensive regions
+
+## Multi-Origin
+
+- You can set Cache Behaviors to redirect request to different origins
+
+## Origin Groups
+
+- You can set a origin group as your distribution origin
+  - Includes a primary and a secondary origin (as fail-over)
+  - You can combine Origin Group with S3 Replication to build HA architecture
+
+## Field Level Encryption
+
+- Specify set of fields in POST requests that you want to be encrypted (up to 10 fields)
+- Specify the public key to encrypt them
+- The fields will be encrypted at Edge Location, and your applications can use the private key to decrypted them
+
+# ECS
+
+## Roles
+
+- ecsInstanceRole
+  - Assigned to EC2 instances running ECS services
+  - Included actions:
+    - Make API calls to ECS service
+    - Send logs to CloudWatch Logs
+    - Pull Docker image from ECR
+- ecsTaskExecutionRole
+  - Assigned to ECS tasks
+  - Define permissions the tasks need
+  - You have to enable `ECS_ENABLE_TASK_IAM_ROLE` option in `ecs.config` file
+- Other roles: ecsServiceRole, AWSServiceRoleForECS
+
+## Task Placement
+
+- Task Placement will be evaluate when you or ASG add or delete a task
+
+### Task Placement Process
+
+1. Satisfy the CPU, memory and port requirements in the task definition
+2. Satisfy the task placement constraints
+3. Satisfy the task placement strategies (best effort)
+
+### Task placement constraints
+
+- distinctInstance
+  - Place tasks on different container instances
+- memberOf
+  - Define custom constraints use Cluster Query Language
+
+### Task Placement Strategies
+
+- Binpack
+  - Place tasks based on the least available amount of *CPU* or *memory* to minimize the number of instances
+  - *field* can be:
+    - *CPU*
+    - *memory*
+- Random
+- Spread
+  - Place the tasks evenly based on the *field* you specify
+  - *field* can be:
+    - *instanceId*
+    - *attribute:esc.availability-zone*
+- You can mix three strategies
+
+## Capacity Provider
+
+- ECS service auto scaling can only scale at task level not instance level
+- Service auto scaling action will be failed if EC2 instances are insufficient
+- You can use Fargate or Capacity Provider
+- Use Capacity Provider
+  - Create a ECS capacity provider associated to an ASG
+  - Create a service to use the provider
+
+## Volumes
+
+- Bind Mount
+  - Mount the instance storage (EC2 mode) or 4 GB storage (Fargate) to the task
+  - Useful for sidecar pattern
+- Docker
+  - Mount the EBS volume (mounted to the EC2 instance) to the task 
+  - Scope can be task (destroyed after stop) or shared (retained after stop)
+- EFS
+
+# ECR
+
+- Push a Docker image to ECR
+  - docker login
+    - CLI v1: Run the output of `aws ecr get-login --no-include-email --region your-region`
+    - CLI v2: Run `aws ecr get-login-password --region your-region | docker login --username AWS --password-stdin your-ecr-resource-url`
+  - `docker build -t your-image .`
+  - `docker tag your-image:latest your-ecr-resource-url/your-repo:latest`
+  - `docker push your-ecr-resource-url/your-repo:latest`
