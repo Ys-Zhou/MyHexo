@@ -21,6 +21,9 @@ tags: AWS - Developer
 
 - Use Bucket Policy
   - Deny upload action when the object is unencrypted
+  - Deny on `aws:SecureTransport = false` to enforce SSL
+  - Deny on `s3:x-amz-server-side-encryption = null` to enforce SSE
+  - Deny on `s3:x-amz-server-side-encryption != aws:kms` to enforce SSE-KMS
 - Default Encryption
   - It will be encrypted by default when you upload an unencrypted object
 
@@ -76,3 +79,7 @@ tags: AWS - Developer
   - Call `Decrypt` API when download
   - KMS has a quota 5500 or 10000 or 30000 req/s based on region
   - You can request a quota increase
+
+# S3 Bucket Key
+
+- An optional setting for SSE-KMS encryption to reduce API calls to KMS

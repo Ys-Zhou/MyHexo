@@ -22,6 +22,19 @@ tags: AWS - Developer
   - Resource: string | array
   - Condition: object
 
+# Dynamic Policies
+
+- Use policy variables in policies
+  - Ex. `${aws:username}`
+
+# Pass Roles
+
+- For the roles to be passed
+  - Must trust the targets (using trust policies defining targets in the Principal section)
+- For users who take the action
+  - Require `iam:PassRole` permission
+  - Need `iam:GetRole` if you want to view the role
+
 # Security Tools
 
 - IAM Credentials Reports
@@ -31,3 +44,5 @@ tags: AWS - Developer
   - User-level report
   - All service permissions and when they are used
   - Use this tool to review user privileges (least privilege principle)
+- IAM Access Analyzer
+  - Identify the resources in your organization and accounts that are shared with an external entity

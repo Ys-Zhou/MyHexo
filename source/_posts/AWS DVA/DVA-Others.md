@@ -52,6 +52,13 @@ tags: AWS - Developer
 - Schema Registry
   - A tool to discover the structure of events
 
+# CloudWatch Logs Encryption
+
+- Associate a KMS CMK with a log group
+- Can only be done through CLI
+  - `associate-kms-key`
+  - `create-log-group`
+
 # CloudTrail Events
 
 - Management Events
@@ -79,3 +86,28 @@ tags: AWS - Developer
   - OPENID_CONNECT
   - AMAZON_COGNITO_USER_POOLS
 - Can use CloudFront to distribute AppSync
+
+# KMS APIs
+
+- `Encrypt`: encrypt up to 4 KB of data
+- `Decrypt`: decrypt up to 4 KB of data
+- `GenerateDataKey`: return a data key with a encrypted copy of the data key
+  - You can use cache feature to cache data key locally
+- `GenerateDataKeyWithoutPlaintext`: only return a encrypted data key
+  - Use `Decrypt` to get data key in plaintext
+- `GenerateRandom`: return a random string
+
+# SSM Parameter Store Parameter Policies
+
+- Expiration
+- ExpirationNotification
+- NoChangeNotification
+
+# Cloud Map
+
+- AWS managed resource discovery service
+
+# Fault Inject Simulator
+
+- Chaos Engineering tools
+- Make failures on AWS services
