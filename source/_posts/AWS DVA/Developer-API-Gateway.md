@@ -1,5 +1,5 @@
 ---
-title: DVA - API Gateway
+title: 'Developer: API Gateway'
 date: 2022-02-17 17:18:04
 tags: AWS - Developer
 ---

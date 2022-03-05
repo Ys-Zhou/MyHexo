@@ -1,5 +1,5 @@
 ---
-title: DVA - X-Ray
+title: 'Developer: X-Ray'
 date: 2022-02-11 21:26:01
 tags: AWS - Developer
 ---

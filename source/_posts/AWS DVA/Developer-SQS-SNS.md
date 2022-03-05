@@ -1,5 +1,5 @@
 ---
-title: DVA - SQS & SNS
+title: 'Developer: SQS & SNS'
 date: 2022-02-12 19:58:27
 tags: AWS - Developer
 ---

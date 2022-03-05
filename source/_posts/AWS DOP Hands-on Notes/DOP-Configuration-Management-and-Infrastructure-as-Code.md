@@ -1,12 +1,10 @@
 ---
-title: DOP - Configuration Management and Infrastructure as Code
+title: 'DevOps: Configuration Management and Infrastructure as Code'
 date: 2022-02-27 23:23:35
-tags:
+tags: AWS - DevOps Engineer
 ---
 
 # CloudFormation
-
-## Every topics in "DVA - CloudFormation"
 
 ## User Data
 - Use Fn::Base64 to pass the user data
@@ -257,5 +255,142 @@ action=/opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource MyResource 
 - Allow / deny actions on the stack
 
 ## Other known features
+- CloudFormation templates
 - ChangeSets
 - Drift detection
+
+# Elastic Beanstalk
+
+## CLIs
+- eb init: initialize local configuration files
+- eb create "eb-env": upload zip file into S3 & create a new environment
+- eb open: access the environment (open the home page in your browser if the environment is Web application)
+- eb status
+- eb health \[--refresh]
+- eb logs
+- eb deploy
+- eb terminate
+
+## Saved Configurations
+- Elastic Beanstalk native IaaC
+- eb config commands (can be done through console as well)
+- A good way to recreate the environment into another region
+```sh
+# Create a saved configuration from the current environment configuration
+eb config save "eb-env" --cfg "cfg-name"
+# Upload current local configuration file to Saved Configurations
+eb config put "cfg-name"
+# Use saved configuration to update environment
+eb config "eb-env" --cfg "cfg-name"
+```
+
+## .ebextensions for configurations
+```yaml
+option_settings:
+  aws:autoscaling:asg:
+    MinSize: 1
+    MaxSize: 10
+    Cooldown: 300
+  aws:autoscaling:launchconfiguration:
+    InstanceType: t3.micro
+```
+
+## Configuration precedences
+- Settings applied directly to the environment
+- Saved Configurations
+- Configuration files in .ebextensions
+- Default values
+
+## .ebextensions for resources
+- Same as CloudFormation resources
+
+## .ebextensions for commands
+```yaml
+# Before the web server has been set up & before the application code has been unpacked
+commands:
+  run_commands:
+    command: echo "this is a command"
+    cwd: /home/ec2-user
+# Before the application has finished its deployment
+container_commands:
+  run_container_commands:
+    command: echo "this is a container command"
+  run_container_commands_once:
+    command: echo "this container command is executed only once"
+    leader_only: true
+```
+
+## Application version lifecycle
+- Default max number of application versions is 1000
+- You can set lifecycle to delete older versions automatically
+  - by total count
+  - by age
+- You can retain or delete the bundle in S3
+- You need provide a service role to perform the actions 
+
+## Managed Updates
+- Define a update window, patches will be automatically to the instances
+
+## Deployment Strategies
+- All at once
+- Rolling
+- Rolling with additional batches
+- Immutable
+- Blue/green (not Elastic Beanstalk native)
+  - Use Route 53 / Swap URL feature
+
+## Worker Environment
+- Pool messages from SQS
+- Use cron.yaml file to run scheduled works
+
+## Multi-container Docker
+- Use ECS
+- Define containers in Dockerrun.aws.json file
+
+# Lambda
+
+## Secrets
+- Encrypted environment variables (using KMS)
+- SMM Parameter Store secret string
+- Secrets Manager
+
+## SAM
+```sh
+# Create SAM project locally
+sam init --runtime python3.8
+# Resolve dependencies and copy sources into .aws-sam directory
+sam build
+# Test function and api locally
+sam local invoke myFunction -e events/event.json
+sam local start-api
+# Package files and upload to S3 bucket
+sam package --output-template my-template.yaml --s3-bucket my-s3-bucket
+# Deploy
+sam deploy --template-file my-template.yaml --stack-name my-sam-stack --capabilities CAPABILITY_IAM
+```
+
+## SAM Deploy Preferences
+```yaml
+AutoPublishAlias: live
+DeploymentPreference:
+  Type: Canary10Percent10Minutes
+  Alarms:
+    - !Ref ...
+  Hooks:
+    PreTraffic: !Ref ...
+    PostTraffic: !Ref ...
+```
+
+# API Gateway
+
+## Endpoint Type
+- Regional
+- Edge optimized
+- Private
+
+## Integration Type
+- Lambda Function
+- HTTP
+- Mock
+- AWS Service
+- VPC Link

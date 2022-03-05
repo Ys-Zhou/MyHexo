@@ -1,5 +1,5 @@
 ---
-title: DVA - Lambda
+title: 'Developer: Lambda'
 date: 2022-02-14 14:47:16
 tags: AWS - Developer
 ---

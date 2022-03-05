@@ -1,5 +1,5 @@
 ---
-title: DVA - Elastic Beanstalk
+title: 'Developer: Elastic Beanstalk'
 date: 2022-02-09 16:26:50
 tags: AWS - Developer
 ---

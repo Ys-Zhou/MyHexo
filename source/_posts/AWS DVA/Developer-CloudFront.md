@@ -1,5 +1,5 @@
 ---
-title: DVA - CloudFront
+title: 'Developer: CloudFront'
 date: 2022-02-09 16:29:28
 tags: AWS - Developer
 ---

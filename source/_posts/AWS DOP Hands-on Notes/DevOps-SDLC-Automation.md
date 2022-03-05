@@ -1,5 +1,5 @@
 ---
-title: DOP - SDLC Automation
+title: 'DevOps: SDLC Automation'
 date: 2022-02-23 12:12:23
 tags: AWS - DevOps Engineer
 ---

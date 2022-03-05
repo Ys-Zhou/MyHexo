@@ -1,5 +1,5 @@
 ---
-title: DVA - Cognito
+title: 'Developer: Cognito'
 date: 2022-02-19 19:56:40
 tags: AWS - Developer
 ---
