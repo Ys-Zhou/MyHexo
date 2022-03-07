@@ -4,6 +4,10 @@ date: 2022-02-27 23:23:35
 tags: AWS - DevOps Engineer
 ---
 
+# Important Contents
+- Developer: CloudFormation
+- Developer: ECS
+
 # CloudFormation
 
 ## User Data
@@ -394,3 +398,82 @@ DeploymentPreference:
 - Mock
 - AWS Service
 - VPC Link
+
+## Canary Deployment
+- Create Canary on the stage
+- Deploying API on the stage will use canary deployment
+- You can change distribution or promote Canary
+- If your backends are Lambda functions, you can use canary deployment on function alias as well
+
+## Known features
+- Stages and Stage Variables
+- Usage Plans
+
+## Fronting Step Function
+- Choose AWS Service as the integration type
+- Need correct permissions to invoke Step Function state machines
+- The output of state machines will not return to API Gateway. Only ARN and start date are in the response body
+
+# ECS
+
+## CloudWatch Logs Integration
+- You can configuration logs in task definition
+  - Log driver: awslogs / splunk
+  - Execution role needs necessary CloudWatch permissions
+- You can install CloudWatch agent to send OS-level logs
+
+## CloudWatch Metrics Integration
+- Cluster level
+- Cluster + Service level
+- You can enable CloudWatch Container Insights to send metrics in each instances (need to pay)
+
+## CloudWatch Events Integration
+- ECS State Change can be Event Source
+  - Container Instance, Task, etc.
+- Use schedule rule to start ESC tasks
+
+## Identify ECR images
+- Push images using different tags
+- Using sha256 digests
+
+# OpsWorks Stacks
+
+## For a 3-tier web application
+- Stack
+  - ELB Layer
+  - Application Layer (using Cookbook & App Repository)
+  - RDS Layer (using Cookbook Repository)
+
+## Chef cookbooks sources
+- Git
+- HTTP
+- S3
+
+## Auto Healing
+- Re-provision the instance if it's unhealthy
+
+## Scaling Type
+- 24/7
+- Time-based
+- Load-based
+- Scaling type is defined at instance level (start & stop), unlike ASG, it can not scale up & down
+
+## Lifecycle Events
+- Setup
+  - After the instance has finished booting
+- Configure: will be triggered on all instances if one of the instances
+  - enters / leaves the online state
+  - associate / disassociate an EIP
+  - attach / detach an ELB to / from a layer
+- Deploy
+  - Run a Deploy command
+  - Setup includes Deploy
+- Undeploy
+  - Run a Undeploy command
+  - Delete an app
+- Shutdown
+  - Before the instance is terminated
+
+## Configure Attributes
+- Information of all layers and all instances
+  - IP, AZ, etc.
