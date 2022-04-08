@@ -1,0 +1,115 @@
+---
+title: 'DevOps: Notes'
+date: 2022-03-31 13:41:15
+tags: 'AWS - DevOps Engineer'
+---
+
+**This article is just a review note for myself which dose not cover all of the topics. Please check my other articles in the DevOps category.**
+
+- OpsWorks
+  - Has auto-healing & auto-scaling features
+  - Life cycle event - configure
+    - Will be called on all instances
+    - If one instance enters / leaves the online state
+  - Instance Scaling Type (not Auto Scaling)
+    - 24/7, time-based, load-based
+- CodeBuild
+  - Can run test without any integrations
+  - Can reference environment variables in `buildspec.yml`
+  - Source information is included in `CODEBUILD_SOURCE_VERSION`
+    - S3: version ID
+    - CodeCommit: commit ID or branch name
+  - Jenkins
+    - CodeBuild plugin: let CodeBuild to provision, configure, manage build nodes
+- CodePipeline
+  - Three CloudWatch Events source types: pipeline state change, stage state change, action state change
+  - Cross-region actions
+    - Automatically copy the input artifacts
+    - Not support for source actions, 3rd-party actions, custom actions
+  - Can provide parameters to CloudFormation templates such as environment variables
+  - Custom actions: Lambda function & custom job worker
+- CodeDeploy
+  - Deployment
+    - EC2: in-place (rolling), blue/green
+    - On-premises: in-place (rolling)
+    - Lambda / ECS: canary, linear, all-at-once
+  - Lambda revision cannot be stored in Github repositories
+  - Only Before* and After* hooks can be customized
+  - ECS hooks: *Install -> AfterAllowTestTraffic -> *AllowTraffic
+  - Custom scripts: return 0 = succeeded; return non-zero = failed
+  - Options for files which is not deployed by CodeDeploy
+    - File the deployment
+    - Overwrite the content
+    - Retain the content
+  - Can use both IAM user and role to register on-premises instances using `register-on-premises-instance`
+- Config
+  - Can only send configuration changes to SNS, not specific alerts. Use CloudWatch Events instead.
+  - Aggregator & aggregator view
+- S3
+  - Bucket policy condition `"aws:SecureTransport": "true/false"` represents for HTTP / HTTPS
+- ASG
+  - Auto Scaling Hooks have a one-hour default timeout (pending / terminating : wait / proceed)
+  - EC2 termination protection does not prevent ASG to terminate instances (only from users)
+  - Scheduled scaling action: time with minimum, maximum, desired size
+- ELB
+  - Access logging
+- AMI
+  - Users can share AMIs to specific accounts without setting the AMIs to public
+- CloudWatch Events
+  - Many services such as DynamoDB provide event type `AWS API Call via CloudTrail`
+    - API call -> trigger a CloudWatch Events event
+    - Within the region where the API call happens
+- CloudWatch Logs
+  - Cross-account log sharing: subscripting -(cross-account)-> destination -> KDS/KDF
+  - ECS tasks can use the awslogs log driver for sending logs to CloudWatch Logs. Need correct EC2 instance role (not ECS task role)
+- CloudWatch Metrics
+  - CloudWatch Metrics stream: send metrics to KDF or 3rd party providers as stream
+- CloudTrail
+  - Enable log file validation option
+  - Data events: S3 object-level API, Lambda Invoke API
+- CloudFormation
+  - Cannot "force" delete a S3 bucket - use a custom resource backed by a Lambda function to empty the bucket first
+  - Use custom resources to dynamically generate parameters such as AMI ID
+  - UpdatePolicy for ASG: `AutoScalingRollingUpdate` / `AutoScalingReplacingUpdate`
+    - `WillReplace` for `AutoScalingReplacingUpdate`: true for replacing whole ELB & ASG
+    - `WaitOnResourceSignals` and `MinSuccessfulInstancesPercent`: successful deployment conditions
+- SSM
+  - SSM Inventory: collect metadata from managed instances including EC2 and on-premise instances
+    - Provide a dashboard view as well
+  - Register on-premises instances
+    - Create an IAM Service Role
+    - Register instances using activation code and activation ID
+- Kinesis
+  - KCL - `MillisBehindLatest` metric: The difference in time between the latest record and the current time
+- Elastic Beanstalk
+  - CNAME swap for environments can be used in blue/green deployment
+    - Not integrated with CodeBuild or CloudFormation, need create a Lambda function to call the API
+  - `cron.yaml` in worker environment
+  - Automatically rollback to old version if deployment failed or health check failed
+  - Decouple RDS: need delete the security group first
+- API Gateway
+  - Able to trigger many AWS services such as Step Function without using Lambda function (integration type - AWS)
+  - Canary deployment is available at stage level. Another available option is to use Lambda canary deployment
+- ECS
+  - Add sha256 to ImageID to point to a specific image
+  - Use `force-new-deployment` option to re-deploy tasks without service definition changes
+- Health
+  - Create AWS_RISK_CREDENTIALS_EXPOSED event
+  - Include AWS-scheduled maintenance activities
+- RDS
+  - Engine version is defined in property `EngineVersion`
+- Route 53
+  - Health check
+    - You have to create health checks manually for non-alias records
+- VM Import/Export
+  - You cannot download AWS-managed AMI directly such Amazon Linux 2. Use this service to export AMI to S3 and then download it.
+- SES
+  - Cannot be used for sending notification emails (not a CloudWatch Events target)
+- Trust Advisor
+  - Only send weekly notification email (use CloudWatch Events and SNS to send notification more frequently)
+- DynamoDB
+  - Use Kinesis Adapter in KCL is the recommended method to handle DynamoDB Streams
+- EC2
+  - EC2 Rescue Tool (has SSM Automations integration)
+- Lambda
+  - Alias has Traffic Shift feature
