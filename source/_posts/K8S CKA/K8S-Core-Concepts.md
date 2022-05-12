@@ -55,14 +55,14 @@ etdectl get / --prefix -key
   - **Kubeadm** config: /etc/kubernetes/manifests/kube-scheduler.yaml
   - Check config: ps -aux | grep kube-scheduler
 
-# Kublet
+# Kubelet
 - At worker nodes
   - Register node
   - Create pods
   - Monitor node & pods
 - Configurations
   - You must manually install it onto worker nodes
-  - Check config: ps -aux | grep kublet
+  - Check config: ps -aux | grep kubelet
 
 # Kube-Proxy
 - A process that runs on each node
